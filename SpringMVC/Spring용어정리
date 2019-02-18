@@ -1,0 +1,28 @@
+
+간단한 용어정리
+ 
+ 1. Bean
+   - 스프링이 제어권을 가지고 직접 만들고 관계를 부여하는 오브젝트 
+   
+ 2. Spring Bean
+   - 스프링 컨테이너가 생성과 관계설정, 사용 등을 제어해주는 제어의역전(IoC)이 적용된 오브젝트
+   
+ 3. BeanFactory
+  - DI의 핵심으로써 ApplicationContext라고도 불린다.
+  - 스프링에서 빈의 생성과 관계설정과 같은 제어의역전을 담당하는 IoC 오브젝트
+  - 주로 이를 확장한 개념인 ApplicationContext라고도 한다.
+    (BeanFactory에서 Bean 정의 파일 읽기, 메세지소스, 이벤트 처리등의 기능을 BeanFactory에 추가한 것이 ApplicationContext이다.)
+    
+    
+	간단한 예제를 만들 경우 아래와 같은 식으로 구현한다.
+
+           ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+           ProductService productService = ctx.getBean(ProductService.class);
+           productService.addProduct(new Product("ホチキス", 100));
+           Product product = productService.findByProductName("ホチキス");
+           System.out.println(product); 
+               
+  
+  
+  
+     

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!--  여긴 주로  view와 Controller를 제외한.. -->		
+	<context:component-scan base-package="com.mycompany.persistence" />
+	<!-- Service를 인식할수 있게 설정. -->
+	<context:component-scan base-package="com.mycompany.service" />
+			
+			
+	<!-- mySQL DataSource/ JDBC-PostgreSQL을 등록한다. 
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/boot_coding?useSSL=false" />
+		<property name="username" value="ykh" />
+		<property name="password" value="raongang" />
+	</bean>
+	-->
+	
+	<!-- properties 설정 방법1 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:/jdbc.properties" />
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+	
+	<!-- properties 설정 방법2 
+	    property-placeholder 설정시 내부적으로 PropertyPlaceholderConfigurer 생성되고 ${}부분을
+	    매핑하여 치환해줌. 
+	<context:property-placeholder location="classpath:/jdbc.properties"/>
+	-->
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!-- MyBatis설정 -->
+	<!-- SqlSessionFactory : myBatis와 spring연동을 위함.
+	     데이터베이스의 연결과(Connection)과 SQL의 실행에 대한 모든 것을 가진 중요 객체이다.
+	     이는 SqlSessionFactoryBean 이라는 클래스를 이용한다. 
+	     
+	     Mapper 인터페이스 : myBatis는 DB의 컬럼과 VO의 데이터를 매핑하기 위한 맵퍼라는 기능 제공
+    -->
+	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml" />
+		<!-- myBatis-Spring에서 XML Mapper 인식 - 직접등록할때는 이용하지 않는다.
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+		-->
+	</bean>
+	
+	<!-- myBatis-spring jar에서 제공하는 SqlSessionTemplate는 MyBatis의 SqlSession인터페이스를 구현한 클래스로 기본적인 트랜잭션의 관리나 
+	     쓰레드 처리의 안정성 등을 보장해 주고, 데이터베이스의 연결과 종료를 책임진다.
+	     clearCache는 추후테스트
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="SqlSessionFactory"></constructor-arg>
+	</bean>	
+	-->
+	
+	<!-- dao와 같은 데이터접근객체대신 mapper를 직접등록 -->
+	<bean id="bookMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.mycompany.mapper.BookMapper"/>
+		<property name="sqlSessionFactory" ref="SqlSessionFactory" />
+	</bean> 
+	
+	
+</beans>

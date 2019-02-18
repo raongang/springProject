@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- Web컨테이너상에 DI컨테이너를 배치하는 설정을 시작한다. -->
+	
+	<!-- ApplicationContext(이하 BeanFactory) 를 웹에서는 아래와 같이 이용한다. -->
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/META-INF/spring/root-context.xml </param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<!-- Web컨테이너상에 DI컨테이너를 배치하는 설정-->
+	
+	<!-- 여기서 자동으로 ApplicationContext가 로드된다 -->
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	
+	
+
+	<!-- Processes application requests -->
+	<!-- 중요
+		spring MVC에서 DispatcherServlet은 Front Controller이다.		
+		모든 HTTP요청을 받아들여 그 밖의 오브젝트 사이의 흐름을 제어
+		기본적으로 스프링MVC의 DispatcherServlet 클래스 그대로 적용
+		
+		스프링 MVC를 베이스로 한 웹어플리케이션에서는 ContextLoaderListener의 DI컨테이너에서(root-context.xml) 관리되고 있는 Bean을 DispatcherServlet의 
+		DI컨테이너(servlet-context.xml)에서 관리되고 있는 BEAN에 인젝션할수 는 있지만, 반대로는 되지 않는다.
+	 -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<!-- 보통 이렇게 설정을 하나 JUnit Test시에 {프로젝트루트경로}/src/webapps와 같이 환경에 따라 경로가 바뀔수 있다.
+				 그래서 보통 클래스 경로에 배치를 하면 유닛테스트든 웹애플리케이션에서든 classpath:/ 만 붙이면 되므로 간단하다.
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+			-->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/META-INF/spring/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- UTF-8 필터설정 -->
+	<!-- 자동으로 HttpServletRequest의 setCharacterEncoding메소드를 실행해서 적절한 문자코드를 지정해준다- 필수 -->
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>
