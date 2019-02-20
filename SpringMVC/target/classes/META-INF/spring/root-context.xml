@@ -17,7 +17,6 @@
 	<!-- Service를 인식할수 있게 설정. -->
 	<context:component-scan base-package="com.mycompany.service" />
 			
-			
 	<!-- mySQL DataSource/ JDBC-PostgreSQL을 등록한다. 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -74,6 +73,5 @@
 		<property name="mapperInterface" value="com.mycompany.mapper.BookMapper"/>
 		<property name="sqlSessionFactory" ref="SqlSessionFactory" />
 	</bean> 
-	
 	
 </beans>

@@ -6,6 +6,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -48,8 +49,15 @@ public class BookController {
 		return "home";
 	}
 	
+	/**
+	 * Model Class - 스프링 MVC에서 제공하는 데이터 전달용 객체
+	 * 과거 Servlet에서는 RequestDispatcher에 데이터를 저장했듯이, 스프링에서는 Model을 이용하여 데이터를 저장.
+	 */	
 	@RequestMapping(value = "/books", method = GET)
-	public String index() {
+	public String index(Model model) {
+		logger.info("getList book");
+		List<BookVO> list = bookMapper.getList();
+		model.addAttribute("bookVO", list);
 		return "books/index";
 	}
 

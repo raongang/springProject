@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- bootstap 설정 : 반드시 head 태그의 처음에 와야한다. -->
 <meta charset="UTF-8">
