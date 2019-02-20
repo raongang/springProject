@@ -1,10 +1,11 @@
 package com.mycompany.mapper;
 
-import java.awt.print.Book;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.mycompany.vo.BookVO;
 
@@ -12,9 +13,17 @@ import com.mycompany.vo.BookVO;
 public interface BookMapper {
 	
 	@Insert("insert into books (title, author, image) values (#{title}, #{author}, #{image})")
-	void register(BookVO bookVo);
+	public void register(BookVO bookVo);
 	
 	@Select("select * from books")
 	public List<BookVO> getList();
+	
+	//update에 사용하기 위해 글에 해당하는 아이디 알려주기
+	//@Param을 이용한 다중 파라미터 처리 설정
+	@Select("select * from books where id=#{id}")
+	public BookVO getBookInfo(@Param("id") Integer id);
+	
+	//@Update("update books set title=#{title},author=#{author},image=#{image}")
+	//public int updateBook(@Param("id") Integer id))
 			
 }
