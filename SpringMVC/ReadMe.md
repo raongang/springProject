@@ -16,5 +16,44 @@
  3. 추후 추가사항 
    - DB Update,delete를 할때, modal로 popup창 보여주게 하기 -> 통신이 ajax로 갈수 있게 변경
    - @ExceptionHandler 적용
-   - 
+   - Ajax 로딩바 적용
     
+    
+ 4. 기타 참고용 
+ 
+<!-- form에 action이 잡혀 있지 않다.
+	 action이 없을 경우 현재의 경로를 그대로 action의 경로로 잡는다.
+	 
+	 <form role="form" ...>
+	  - html5에서 새롭게 추가된 태그
+	  - 컴퓨터의 리더기(시각장애인)를 이용해서 웹 페이지를 읽을때, 해당 부분이 form이라는 것을 알려준다.
+ -->
+ <form role="form" method="post">
+ 
+ <!-- 각 버튼(modify, remove, listall 에 대해 JQuery 방식으로 처리.. -->
+$(document).ready(function(){
+	var formObj = $("form[role='form']");
+	
+console.log(formObj);
+
+//class 는 . 으로 id는 #으로..
+$(".modifyBtn").on("click",function(){
+	formObj.attr("action","/board/modifyPage");
+	formObj.attr("method","get");
+	formObj.submit();
+});
+
+$(".removeBtn").on("click",function(){
+	formObj.attr("action","/board/removePage");
+	formObj.submit();
+	
+});
+
+$(".goListBtn").on("click",function(){
+	//formObj.attr("action","/board/listPage");
+	formObj.attr("action","/sboard/list");
+	formObj.attr("method","get");
+	formObj.submit();
+});
+});
+ 

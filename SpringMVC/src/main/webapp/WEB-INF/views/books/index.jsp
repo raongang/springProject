@@ -20,7 +20,7 @@
 	                <div class="caption">
 	                    <h3>${ book.title } <small>${ book.author }</small></h3>
 	                    <!-- URI형태로  -->
-	                    <a href="<c:url value='/bookCon/books/update/${book.id}' />" class="btn btn-lg btn-info">수정</a>
+	                    <a href="<c:url value='/bookCon/books/update/${book.id}' />" id="index_update" class="btn btn-lg btn-info">수정</a>
 	                    <a href="<c:url value='/bookCon/books/delete/${book.id}' />" class="btn btn-lg btn-danger">삭제</a>
 	                </div>
 	            </div>
@@ -38,7 +38,14 @@
     <!-- 
     <a href="<c:url value="/books/new" />" class="btn btn-lg btn-primary">register</a>
      -->
-         
-	    
   </body>
 </html>
+
+<script>
+	$(document).ready(function(){
+		
+	});
+	
+</script>
+
+
