@@ -31,6 +31,7 @@ public class BookController {
 	private BookMapper bookMapper;
 	
 	/**
+	 * BOOK MENU LIST 
 	 * Model Class - 스프링 MVC에서 제공하는 데이터 전달용 객체
 	 * 과거 Servlet에서는 RequestDispatcher에 데이터를 저장했듯이, 스프링에서는 Model을 이용하여 데이터를 저장.
 	 */	
@@ -42,7 +43,14 @@ public class BookController {
 		return "books/index";
 	}
 
-	/*@ModelAttribute라는 어노테이션만 붙여도 클라이언트에서 전달하는 파라미터를 1:1로 전담 프로퍼티에 자동 바인딩함.
+	@RequestMapping(value="/books_new",method=GET)
+	public String newBook() {
+		return "books/new";
+	}
+	
+	/*
+	 *  BOOK 등록하기
+	 * @ModelAttribute라는 어노테이션만 붙여도 클라이언트에서 전달하는 파라미터를 1:1로 전담 프로퍼티에 자동 바인딩함.
 	 * 즉, 서블릿에서 String parameter1 = request.getParameter("parameter1"); 이런식의 코드가 없어지는거임. 
 	*/
 	@RequestMapping(value = "/register", method = POST)
@@ -53,13 +61,11 @@ public class BookController {
 		
 		return "redirect:/bookCon/books";
 	}
+
 	
-	@RequestMapping(value="/books_new",method=GET)
-	public String newBook() {
-		return "books/new";
-	}
-	
-	@RequestMapping(value="/books/edit/{id}", method=GET)
+	// BOOK UPDATE
+	// @PathVariable - URI 경로에서 원하는 데이터를 추출하는 용도로 사용.
+	@RequestMapping(value="/books/update/{id}", method=GET)
 	public String update(@PathVariable("id") Integer id, Model model) throws Exception{
 		logger.info("updateForm enter ID >>" + id);
 
@@ -67,16 +73,29 @@ public class BookController {
 		model.addAttribute("vo",vo);
 		
 		return "books/updateForm";
-		
 	}
 	
-	@RequestMapping(value="/books/edit",method=POST)
+	@RequestMapping(value="/books/update",method=POST)
 	public String update(@ModelAttribute BookVO bookVO) throws Exception{
 		logger.info("update enter");
+		logger.info("bookVO Content >> " + bookVO.toString());
 		
+		//업데이트된 개수 : result - 여기 예외처리하는거 있는지 보기.
+		int result = bookMapper.updateBook(bookVO);
+		logger.info("update result >> " + result);
 		return "redirect:/bookCon/books";
 	}
 	
-	
+	// BOOK DELETE 
+	@RequestMapping(value="/books/delete/{id}", method=GET)
+	public String delete(@PathVariable("id") Integer id) throws Exception{
+		logger.info("delete enter");
+		
+		int result = bookMapper.deleteBook(id);
+		logger.info("delete result >> " + result);
+		
+		return "redirect:/bookCon/books";
+		
+	}
 	
 }//end controller

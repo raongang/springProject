@@ -13,5 +13,8 @@
    - myBatis 연결방식에서 dao데이터접근객체가 아닌 mapper를 바로 등록해서 이용할수 있다.
    - 본 프로젝트에서는 다른 방식으로 테스트하기 위해 mapper를 바로 등록해서 진행한다.
 
-  
+ 3. 추후 추가사항 
+   - DB Update,delete를 할때, modal로 popup창 보여주게 하기 -> 통신이 ajax로 갈수 있게 변경
+   - @ExceptionHandler 적용
+   - 
     

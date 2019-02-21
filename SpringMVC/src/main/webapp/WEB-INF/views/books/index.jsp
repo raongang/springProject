@@ -15,12 +15,13 @@
 	<div class="row">
 	    <c:forEach var="book" items="${bookVO}" varStatus="status">
 	        <div class="col-md-4">
-	            <div class="thumbnail">
-	                <img src="${ book.image }" />
+	            <div class="img-thumbnail">
+	                <img src="${ book.image }" alt="bookImage" style="width:100%"/>
 	                <div class="caption">
 	                    <h3>${ book.title } <small>${ book.author }</small></h3>
 	                    <!-- URI형태로  -->
-	                    <a href="<c:url value='/bookCon/books/edit/${ book.id }' />" class="btn btn-lg btn-info">수정</a>
+	                    <a href="<c:url value='/bookCon/books/update/${book.id}' />" class="btn btn-lg btn-info">수정</a>
+	                    <a href="<c:url value='/bookCon/books/delete/${book.id}' />" class="btn btn-lg btn-danger">삭제</a>
 	                </div>
 	            </div>
 	        </div>

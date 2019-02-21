@@ -16,10 +16,11 @@
         </div>
        <!-- <form action="<c:url value="/books" />" method="post">-->
          <%-- c:url안쓰고 --%>
-         <form action="/bookCon/update" method="post">
+         <form action="/bookCon/books/update" method="post">
             <div class="form-group form-group-lg">
                 <label class="control-label">도서 제목</label>
                 <input name="title" type="text" class="form-control" value="${vo.title }">
+                <input name="id" type="hidden" class="form-control" value="${vo.id }">
             </div>
             <div class="form-group form-group-lg">
                 <label class="control-label">저자</label>
