@@ -59,7 +59,6 @@ public class BookController {
 		return "books/new";
 	}
 	
-	
 	@RequestMapping(value="/books/edit/{id}", method=GET)
 	public String update(@PathVariable("id") Integer id, Model model) throws Exception{
 		logger.info("updateForm enter ID >>" + id);
