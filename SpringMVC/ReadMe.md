@@ -23,10 +23,6 @@
  
 <!-- form에 action이 잡혀 있지 않다.
 	 action이 없을 경우 현재의 경로를 그대로 action의 경로로 잡는다.
-	 
-	 <form role="form" ...>
-	  - html5에서 새롭게 추가된 태그
-	  - 컴퓨터의 리더기(시각장애인)를 이용해서 웹 페이지를 읽을때, 해당 부분이 form이라는 것을 알려준다.
  -->
  <form role="form" method="post">
  

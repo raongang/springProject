@@ -14,9 +14,15 @@
             <h1>Books Update</h1>
             <p>views/books/update.jsp</p>
         </div>
-       <!-- <form action="<c:url value="/books" />" method="post">-->
-         <%-- c:url안쓰고 --%>
-         <form action="/bookCon/books/update" method="post">
+        
+         <!-- <form action="<c:url value="/books" />" method="post">-->
+         <%-- c:url안쓰고 
+         	<form role="form" ...>
+	  		- html5에서 새롭게 추가된 태그
+	  	    - 컴퓨터의 리더기(시각장애인)를 이용해서 웹 페이지를 읽을때, 해당 부분이 form이라는 것을 알려준다.
+         --%>
+         
+         <form role="form" action="/bookCon/books/update" method="post">
             <div class="form-group form-group-lg">
                 <label class="control-label">도서 제목</label>
                 <input name="title" type="text" class="form-control" value="${vo.title }">

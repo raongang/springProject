@@ -87,15 +87,15 @@ public class BookController {
 	}
 	
 	// BOOK DELETE 
-	@RequestMapping(value="/books/delete/{id}", method=GET)
+	@RequestMapping(value="/books/delete/{id}", method=POST)
 	public String delete(@PathVariable("id") Integer id) throws Exception{
-		logger.info("delete enter");
+		logger.info("delete enter id >> " + id);
 		
 		int result = bookMapper.deleteBook(id);
 		logger.info("delete result >> " + result);
 		
 		return "redirect:/bookCon/books";
-		
+	
 	}
 	
 }//end controller

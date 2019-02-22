@@ -5,8 +5,42 @@
 <html lang="ko">
   <head>
   </head>
+  
+  <script>
+	$(document).ready(function(){
+		$(".btn_delete").on("click",function(e){
+			$("#confirmModal").modal('show');//modal confirm 실행.
+			//id값 가져오기
+			var id = $("#book_id").val();
+			console.log("bookid >> "+id);
+			
+			$(".modal_delete").on("click",function(){
+				$.ajax({
+					type : "post",
+					url : '/bookCon/books/delete/'+id,
+					success:function(result){
+						$("#getBody").html("delete success!");
+						$("#resultModal").modal('show');
+						
+						self.location="/bookCon/books/"; //list로 페이지전환
+						
+					},
+					error:function(result){
+						$("#getBody").html("delete error!");
+						$("#resultModal").modal('show');
+					}	
+				});//end ajax
+			});//end modal_delete
+			$("#confirmModal").modal("hide");
+		});
+	});
+	
+		
+  </script>
+  
   <body class="container">
   
+  	<!-- MAIN FORM -->
     <div class="jumbotron">
     	<h1>Books INDEX</h1>
 		<p>views/books/index.jsp</p>
@@ -19,9 +53,11 @@
 	                <img src="${ book.image }" alt="bookImage" style="width:100%"/>
 	                <div class="caption">
 	                    <h3>${ book.title } <small>${ book.author }</small></h3>
-	                    <!-- URI형태로  -->
-	                    <a href="<c:url value='/bookCon/books/update/${book.id}' />" id="index_update" class="btn btn-lg btn-info">수정</a>
-	                    <a href="<c:url value='/bookCon/books/delete/${book.id}' />" class="btn btn-lg btn-danger">삭제</a>
+	                    <input name="book_id" type="hidden" id="book_id" value="${book.id }"><!-- ajax에서쓰기위해 -->
+	                    <!--<a href="<c:url value='/bookCon/books/delete/${book.id}' />" class="">삭제</a>  modal confirm ajax로 변경 -->
+	                    <a href="<c:url value='/bookCon/books/update/${book.id}' />" class="btn btn-lg btn-info btn_update">수정</a>
+	                    <button type="submit" class="btn btn-lg btn-danger btn_delete">삭제</button> 
+	                    
 	                </div>
 	            </div>
 	        </div>
@@ -30,22 +66,16 @@
 	
 	<br/>
 	
+<%@ include file="/WEB-INF/include/modal.jsp" %>
+	
 	<div class="row">
 		<c:url value="/bookCon/books_new" var="url" />
-		<a href="${url}" class="btn btn-lg btn-primary">Register</a>	    
+		<a href="${url}" class="btn btn-lg btn-primary btn_register">Register</a>	    
 	</div>
 
-    <!-- 
-    <a href="<c:url value="/books/new" />" class="btn btn-lg btn-primary">register</a>
-     -->
+
+
   </body>
 </html>
-
-<script>
-	$(document).ready(function(){
-		
-	});
-	
-</script>
 
 
