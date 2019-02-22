@@ -8,7 +8,6 @@
   
   <script>  	
 	$(document).ready(function(){
-		
 		<%-- ajax 방식
 		$(".btn_delete").on("click",function(e){
 			$("#confirmModal").modal('show');//modal confirm 실행.
@@ -36,17 +35,17 @@
 		});
 		--%>
 		
-		
 		//단순 modal 팝업창만 보여주고 get으로 통신.
 		$(".btn_delete").on("click",function(e){
 			var id = $("#book_id").val();
 			$("#confirmModal").modal('show');//modal confirm 실행.
-			$(".modal_delete").on("click",function(e){ //modaldptj클릭시 삭제
+			$(".modal_delete").on("click",function(e){ //modald 클릭시 삭제
 				console.log("click");
 				self.location="/bookCon/books/delete/"+id;
-			});
-		});
-	});
+			}); //end .modal_delete
+		}); //end .btn_delete
+		
+	}); //end document
   </script>
   
   <body class="container">

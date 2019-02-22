@@ -11,11 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mycompany.mapper.BookMapper;
+import com.mycompany.service.DataNotFoundException;
 import com.mycompany.vo.BookVO;
 
 /**
@@ -86,14 +89,46 @@ public class BookController {
 		return "redirect:/bookCon/books";
 	}
 	
-	// BOOK DELETE GET
+	
 	@RequestMapping(value="/books/delete/{id}", method=GET)
 	public String delete(@PathVariable("id") Integer id) throws Exception{
+		
 		logger.info("delete enter id >> " + id);
+		
+		/* error.jsp테스트 >> hanlderException를 실행해서 /books/error.jsp에 에러메세지를 보여준다.
+		boolean chk=true;
+		if(chk) {
+			throw new Exception("강제적인 exception 테스트");
+		}*/
 		
 		int result = bookMapper.deleteBook(id);
 		logger.info("delete result >> " + result);
-		
 		return "redirect:/bookCon/books";
 	}
+	
+	
+	/**
+	 *  CustomerControllAdvice.java로 이동 
+	 *  
+	 *  @ExceptionHandler 
+	 *  
+	 *  만약 exception이 발생하게 되면 DataNotFuoundException 처리가 되어서 화면에 예외정보가 그대로 보이게 된다.
+	 *  물론, try~catch로 이 부분을 감싸서 해결할수도 있지만, 스프링MVC에서는 @ExceptionHandler 어노테이션을 이용하여 
+	 *  예외처리 메소드를 추가할 수 있다.
+	 *  
+	 *  인수로 서블릿 API의 오브젝트와 WebRequest 오브젝트등을 설정할 수 있다. 반면 Model 오브젝트나 요청 파라미터 등은 설정 할 수 없다.
+	 *  
+	 *  @ExceptionHandler({DataNotFoundException.class, BarException.class}) <ㅡ 여러개 선언
+	 */
+	@ExceptionHandler(Exception.class)
+	public ModelAndView hanlderException(Exception e) {
+		
+		ModelAndView mv = new ModelAndView("/books/error");
+		mv.addObject("exceptionMsg",e.getMessage());
+		return mv;
+	}
+	
+	
+
+	
 }//end controller

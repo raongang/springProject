@@ -14,42 +14,6 @@
    - 본 프로젝트에서는 다른 방식으로 테스트하기 위해 mapper를 바로 등록해서 진행한다.
 
  3. 추후 추가사항 
-   - DB Update,delete를 할때, modal로 popup창 보여주게 하기 -> 통신이 ajax로 갈수 있게 변경
-   - @ExceptionHandler 적용
    - Ajax 로딩바 적용
     
-    
- 4. 기타 참고용 
- 
-<!-- form에 action이 잡혀 있지 않다.
-	 action이 없을 경우 현재의 경로를 그대로 action의 경로로 잡는다.
- -->
- <form role="form" method="post">
- 
- <!-- 각 버튼(modify, remove, listall 에 대해 JQuery 방식으로 처리.. -->
-$(document).ready(function(){
-	var formObj = $("form[role='form']");
-	
-console.log(formObj);
-
-//class 는 . 으로 id는 #으로..
-$(".modifyBtn").on("click",function(){
-	formObj.attr("action","/board/modifyPage");
-	formObj.attr("method","get");
-	formObj.submit();
-});
-
-$(".removeBtn").on("click",function(){
-	formObj.attr("action","/board/removePage");
-	formObj.submit();
-	
-});
-
-$(".goListBtn").on("click",function(){
-	//formObj.attr("action","/board/listPage");
-	formObj.attr("action","/sboard/list");
-	formObj.attr("method","get");
-	formObj.submit();
-});
-});
  
