@@ -6,8 +6,10 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<!-- Web컨테이너상에 DI컨테이너를 배치하는 설정을 시작한다. -->
 	
-	<!-- ApplicationContext(이하 BeanFactory) 를 웹에서는 아래와 같이 이용한다. -->
-	
+	<!-- ApplicationContext(이하 BeanFactory) 를 웹에서는 아래와 같이 이용한다.
+		 Context : ServletContext 객체 생성 
+	 -->
+	 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:/META-INF/spring/root-context.xml </param-value>
@@ -21,9 +23,6 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
-	
-	
 
 	<!-- Processes application requests -->
 	<!-- 중요
@@ -33,6 +32,8 @@
 		
 		스프링 MVC를 베이스로 한 웹어플리케이션에서는 ContextLoaderListener의 DI컨테이너에서(root-context.xml) 관리되고 있는 Bean을 DispatcherServlet의 
 		DI컨테이너(servlet-context.xml)에서 관리되고 있는 BEAN에 인젝션할수 는 있지만, 반대로는 되지 않는다.
+		
+		ServletConfig
 	 -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>

@@ -14,6 +14,7 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
+		
 		<!-- 파일의 추가 라이브러리 -->
 		<dependency>
 			<groupId>org.imgscalr</groupId>
@@ -114,6 +115,20 @@
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
 			<version>1.16</version>
 		</dependency>
+		
+		<!-- Tiles 사용 위해 추가
+			 Tiles라는 기능은 스프링 3.2이후부터 가능
+		 -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-core</artifactId>
+		    <version>3.0.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-jsp</artifactId>
+		    <version>3.0.7</version>
+		</dependency>		
 					
 		<!-- Spring -->
 		<dependency>
