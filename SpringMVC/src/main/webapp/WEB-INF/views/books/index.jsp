@@ -6,8 +6,10 @@
   <head>
   </head>
   
-  <script>
+  <script>  	
 	$(document).ready(function(){
+		
+		<%-- ajax 방식
 		$(".btn_delete").on("click",function(e){
 			$("#confirmModal").modal('show');//modal confirm 실행.
 			//id값 가져오기
@@ -23,7 +25,6 @@
 						$("#resultModal").modal('show');
 						
 						self.location="/bookCon/books/"; //list로 페이지전환
-						
 					},
 					error:function(result){
 						$("#getBody").html("delete error!");
@@ -33,9 +34,19 @@
 			});//end modal_delete
 			$("#confirmModal").modal("hide");
 		});
-	});
-	
+		--%>
 		
+		
+		//단순 modal 팝업창만 보여주고 get으로 통신.
+		$(".btn_delete").on("click",function(e){
+			var id = $("#book_id").val();
+			$("#confirmModal").modal('show');//modal confirm 실행.
+			$(".modal_delete").on("click",function(e){ //modaldptj클릭시 삭제
+				console.log("click");
+				self.location="/bookCon/books/delete/"+id;
+			});
+		});
+	});
   </script>
   
   <body class="container">
