@@ -23,25 +23,38 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	
+	<!-- ViewResolver 설정 
+	     ViewResolver : View이름을 바탕으로 View 오브젝트를 결정
+	     View : 뷰에 화면표시 처리를 의뢰
+	    
+	     UrlBasedViewResolver의 서브클래스인 InternalResourceViewResolver가 등록됨. 
+		order번호가 낮은게 우선순위가 높다 
+	-->	     
+	     
+	
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
 	</beans:bean>
 	
 	
 	<!-- 뷰 리졸버 추가 -->
-	<beans:bean id="tielsViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
-		<beans:property name="order" value="1" />
+	<beans:bean id="tielsViewResolver"
+	    class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+	    <beans:property name="order" value="1" />
 	</beans:bean>
 	
 	<!-- Tiles 설정 파일 -->
-	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-		<beans:property name="definitions">
-			<beans:list>
-				<beans:value>/WEB-INF/tiles/</beans:value>
-			</beans:list>
-		</beans:property>
+	<beans:bean id="tilesConfigurer"
+	    class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	    <beans:property name="definitions">
+	        <beans:list>
+	            <beans:value>/WEB-INF/tiles/tiles.xml</beans:value>
+	        </beans:list>
+	    </beans:property>
 	</beans:bean>
 	
 		
