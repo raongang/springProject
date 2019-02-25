@@ -24,15 +24,29 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	
-	<!-- ViewResolver 설정 
+	
+	<!-- 
+	  ViewResolver란? 
+		View Interface를 구현한 View 오브젝트가 개발자가 작성한 뷰를 호출하여 화면처리
+	    View Object에서 View Object를 반환하게 될 경우 controller와 View가 밀접하게 결합된다.
+	    
+	    뷰 리졸버는 컨트롤러와 뷰 사이의 약한 결합을 유지하고, 컨트롤러가 반환한 View이름으로
+	    View 오브젝트를 생성하게 해준다.
+
+	 ViewResolver 설정 
 	     ViewResolver : View이름을 바탕으로 View 오브젝트를 결정
 	     View : 뷰에 화면표시 처리를 의뢰
 	    
 	     UrlBasedViewResolver의 서브클래스인 InternalResourceViewResolver가 등록됨. 
 		order번호가 낮은게 우선순위가 높다 
-	-->	     
+		
+     ViewResolver의 종류
+         UrlBasedViewResolver를 제일 많이 사용하는데, 어느 뷰 기반으로 오브젝트가 생성되는가는 
+         UrlBasedViewResolver 의 viewClass 프로퍼티에 설정하면 되며(2번), viewClass를 고정한 
+         UrlBasedViewResolver를 상속한 뷰 리졸버가 여러개 있으므로, 대응하는 뷰 리졸버가 있으면 이를 이용하면 된다.
+	  -->
 	     
-	
+	<!-- 1번 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
@@ -40,9 +54,8 @@
 	</beans:bean>
 	
 	
-	<!-- 뷰 리졸버 추가 -->
-	<beans:bean id="tielsViewResolver"
-	    class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	<!-- 2번 -->
+	<beans:bean id="tielsViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	    <beans:property name="order" value="1" />
 	</beans:bean>
