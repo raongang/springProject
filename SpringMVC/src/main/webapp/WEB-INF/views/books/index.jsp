@@ -5,7 +5,6 @@
 <html lang="ko">
   <head>
   </head>
-  
   <script>  	
 	$(document).ready(function(){
 		<%-- ajax 방식
@@ -45,6 +44,10 @@
 			}); //end .modal_delete
 		}); //end .btn_delete
 		
+		$(".image_title").on("click",function(e){
+			var formObj = $("form[role='form']"); 
+		});
+		
 	}); //end document
   </script>
   
@@ -62,7 +65,8 @@
 	    <c:forEach var="book" items="${bookVO}" varStatus="status">
 	        <div class="col-md-4">
 	            <div class="img-thumbnail">
-	                <img src="${ book.image }" alt="bookImage" style="width:100%"/>
+	                <!-- img 손 모양 -->
+	                <img src="${ book.image }" alt="bookImage" style="cursor:pointer;width:100%;" class="image_title" />
 	                <div class="caption">
 	                    <h3>${ book.title } <small>${ book.author }</small></h3>
 	                    <input name="book_id" type="hidden" id="book_id" value="${book.id }"><!-- ajax에서쓰기위해 -->
