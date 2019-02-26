@@ -35,6 +35,7 @@ public class BookController {
 	@Autowired
 	private BookMapper bookMapper;
 	
+	/*
     @RequestMapping(value = "/", method = GET)
     public String home(Locale locale, Model model) {
         Date date = new Date();
@@ -42,10 +43,10 @@ public class BookController {
         String formattedDate = dateFormat.format(date);
         model.addAttribute("serverTime", formattedDate);
         // 기존 "home.jsp"에서 변경
-        // */* 형태로 페이지를 요청하였으므로,
+        //  형태로 페이지를 요청하였으므로,
         // tiles.xml 설정에 의해 content로 전송 됨.
         return "statics/home";
-    }
+    }*/
     
 	
 	/**

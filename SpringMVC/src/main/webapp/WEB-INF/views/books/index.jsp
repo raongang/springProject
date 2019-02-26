@@ -52,8 +52,10 @@
   
   	<!-- MAIN FORM -->
     <div class="jumbotron">
-    	<h1>Books INDEX</h1>
+    	<h1>Books LIST</h1>
+    	<%--
 		<p>views/books/index.jsp</p>
+		 --%>
     </div>
 
 	<div class="row">
