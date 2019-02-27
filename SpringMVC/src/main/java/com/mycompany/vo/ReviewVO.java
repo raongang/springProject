@@ -1,7 +1,8 @@
 package com.mycompany.vo;
 
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
-import com.sun.istack.internal.NotNull;
+
 
 public class ReviewVO {
 	Integer id;
