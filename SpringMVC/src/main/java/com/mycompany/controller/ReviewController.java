@@ -42,7 +42,10 @@ public class ReviewController {
 	@RequestMapping(value="/review",method=POST)
 	public String RegiReview(@Valid @ModelAttribute ReviewVO reviewVO, BindingResult bind, RedirectAttributes attr) {
 		
+		logger.info("RegiReview enter");
+		
 		if(bind.hasErrors()) {
+			logger.info("bind hass Errors");
 			List<FieldError> fieldError = bind.getFieldErrors();
 			attr.addFlashAttribute("fieldErrors",fieldError);
 			attr.addFlashAttribute("reviewVO",reviewVO);
