@@ -4,10 +4,7 @@ package com.mycompany.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mycompany.mapper.BookMapper;
+import com.mycompany.mapper.ReviewMapper;
 import com.mycompany.vo.BookVO;
+import com.mycompany.vo.ReviewVO;
 
 /**
  * Handles requests for the application home page.
  */
+
 @Controller
 @RequestMapping("/bookCon/**")
 public class BookController {
@@ -34,6 +34,9 @@ public class BookController {
 	
 	@Autowired
 	private BookMapper bookMapper;
+	
+	@Autowired
+	private ReviewMapper reviewMapper;
 	
 	/*
     @RequestMapping(value = "/", method = GET)
@@ -121,6 +124,46 @@ public class BookController {
 		logger.info("delete result >> " + result);
 		return "redirect:/bookCon/books";
 	}
+	
+	//detail 및 리뷰 화면
+	@RequestMapping(value="/books/detail/{id}",method=GET)
+	public String detail(@PathVariable("id") Integer id, Model model) throws Exception{
+		logger.info("Detail Controller enter");
+		
+		BookVO vo = bookMapper.getBookInfo(id);
+		model.addAttribute("bookVO",vo);
+		
+		//폼 태그에서 <form:form modelAttribute="review"> 를 읽어오게 하기 위해
+		ReviewVO review = new ReviewVO();
+		review.setBookId(id);
+		model.addAttribute("review",review);
+		
+		return "books/detail";
+		
+	}
+	
+	//get 리뷰 리스트
+	@RequestMapping(value="/books/detailReview/{id}",method=GET)
+	public String showReviewList(@PathVariable("id") Integer id, Model model) throws Exception{
+		logger.info("showReviewList Controller enter");
+		
+		//게시글 가져오기
+		BookVO vo = bookMapper.getBookInfo(id);
+		model.addAttribute("bookVO",vo);
+		
+		//리뷰리스트 가져오기
+		List<ReviewVO> reviewList = reviewMapper.getReviews(id);
+		model.addAttribute("reviewList",reviewList);
+		
+		//폼 태그에서 <form:form modelAttribute="review"> 를 읽어오게 하기 위해
+		ReviewVO review = new ReviewVO();
+		review.setBookId(id);
+		model.addAttribute("review",review);
+		
+		return "books/detail";
+		
+	}
+	
 	
 	/**
 	 *  CustomerControllAdvice.java로 이동 

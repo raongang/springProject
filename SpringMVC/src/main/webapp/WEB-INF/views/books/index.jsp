@@ -43,9 +43,11 @@
 				self.location="/bookCon/books/delete/"+id;
 			}); //end .modal_delete
 		}); //end .btn_delete
-		
+
+		//상세페이지
 		$(".image_title").on("click",function(e){
-			var formObj = $("form[role='form']"); 
+			var id = $("#book_id").val();
+			self.location="/bookCon/books/detailReview/"+id;
 		});
 		
 	}); //end document
@@ -79,7 +81,6 @@
 	        </div>
 	    </c:forEach>
 	</div>   
-	
 	<br/>
 	
 <%@ include file="/WEB-INF/include/modal.jsp" %>
