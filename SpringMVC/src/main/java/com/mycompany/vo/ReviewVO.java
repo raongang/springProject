@@ -1,8 +1,14 @@
 package com.mycompany.vo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import com.sun.istack.internal.NotNull;
+
 public class ReviewVO {
 	Integer id;
+	
+	@NotEmpty
 	String text;
+	@NotNull
 	Integer bookId;
 	Integer userId;
 	

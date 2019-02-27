@@ -6,7 +6,7 @@
 
 <head>
 
-<title>Books NEW</title>4
+<title>Books NEW</title>
 </head>
 <body>
     <div class="container">
