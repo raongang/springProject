@@ -7,7 +7,24 @@
 <title>Books NEW</title>
 </head>
 
+<script>
+	<%--로딩바 관련 - 추후 검토 필요 
+	    원래는 ajax이용해서 쓰는게 제일 좋음.
+	--%>
+	$(document).ready(function(){
+		$('#loader').hide();
+		$(".btn-primary").on("click",function(e){
+			$('#loader').show();
+		});
+	});
+</script>
+
 <body>
+	<%-- 로딩바 관련 - 추후 검토 필요, 가운데 정렬해야함. --%>
+	<div id="loader" style="position: fixed; top:0; left:0; width:100%; height: 100%;">
+		<img src='/resources/img/loadingbar.gif'/>
+	</div>
+    
     <div class="container">
         <div class="jumbotron">
             <h1>Books NEW</h1>
