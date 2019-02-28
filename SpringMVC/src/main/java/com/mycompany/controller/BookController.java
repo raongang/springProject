@@ -120,12 +120,12 @@ public class BookController {
 		logger.info("bookVO Content >> " + bookVO.toString());
 		
 		if(erros.hasErrors()) {
+			logger.info("errors.hasErrors enter");
 			List<FieldError> fieldErrors= erros.getFieldErrors();
 			attr.addFlashAttribute("fieldErrors",fieldErrors);
 			attr.addFlashAttribute("bookVO",bookVO);
 			return "redirect:/bookCon/books/update/"+bookVO.getId();
 		}
-		
 		
 		//업데이트된 개수 : result - 여기 예외처리하는거 있는지 보기.
 		int result = bookMapper.updateBook(bookVO);

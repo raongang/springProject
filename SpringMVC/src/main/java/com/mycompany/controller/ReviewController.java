@@ -43,7 +43,6 @@ public class ReviewController {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 	
-	
 	/** 리뷰 등록
 	 *  RedirectAttributes - 리다이렉트가 발생하기 전에 모든 플래시 속성을 세션에 복사한다. 
 		                     리다이렉션 이후에는 저장된 플래시 속성을 세션에서 모델로 이동시킨다. 

@@ -8,12 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Update Form</title>
 </head>
-<body>
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Books Update</h1>
-            <p>views/books/update.jsp</p>
-        </div>
+
+  <div class="container">
+      <div class="jumbotron">
+          <h1>Books Update</h1>
+          <p>views/books/update.jsp</p>
+      </div>
         
          <!-- <form action="<c:url value="/books" />" method="post">-->
          <%-- c:url안쓰고 
@@ -33,15 +33,15 @@
                 <label class="control-label">저자</label>
                 <input name="author" type="text" class="form-control" value="${vo.author}">
             </div>
-            
-	<c:forEach var="error" items="${fieldErrors }">
-		<div class="alert alert-warning">
-			<strong>${error.getField() }</strong>
-			  :  ${error.getDefaultMessage()}
-		</div>
-	</c:forEach>
-	            
-			            
+          
+			<c:forEach var="error" items="${fieldErrors }">
+				<div class="alert alert-warning">
+					<strong>${error.getField() }</strong>
+					  :  ${error.getDefaultMessage()}
+				</div>
+			</c:forEach>
+			
+			 
             <div class="form-group form-group-lg">
                 <label class="control-label">이미지</label>
                 <input name="image" type="text" class="form-control" value="${vo.image }">
@@ -49,5 +49,5 @@
             <button type="submit" class="btn btn-lg btn-primary">전송</button>
         </form>
     </div>
-</body>
+
 </html>

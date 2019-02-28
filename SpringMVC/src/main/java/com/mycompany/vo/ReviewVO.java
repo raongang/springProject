@@ -1,6 +1,8 @@
 package com.mycompany.vo;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -21,7 +23,6 @@ import org.hibernate.validator.constraints.NotEmpty;
  *   5 BindingResult에 Error값 저장 및 페이지 리프레쉬를 위한 RedirectAttributes 선언
  *   6 jsp에서 Error값 표시 ( detailReview ) 
  */
-
 
 public class ReviewVO {
 	Integer id;

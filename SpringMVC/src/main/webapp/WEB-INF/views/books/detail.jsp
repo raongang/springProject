@@ -48,8 +48,9 @@
 			  :  ${error.getDefaultMessage()}
 		</div>
 	</c:forEach>
-		
+	
 	<form:textarea path="text" cssClass="form-control" rows="5"/>
+	
 	<form:hidden   path="bookId" />
     <form:hidden   path="userId" /> <!-- sequence값 -->
     <button class="btn btn-block btn-primary" type="submit">Review 등록</button>	
