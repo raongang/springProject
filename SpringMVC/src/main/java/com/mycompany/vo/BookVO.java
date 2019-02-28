@@ -1,9 +1,15 @@
 package com.mycompany.vo;
 
+import javax.validation.constraints.NotNull;
+
+
 public class BookVO {
 	int id;
 	String title;
+	
+	@NotNull //테스트용
 	String author;
+	
 	String image;
 	
 	public int getId() {

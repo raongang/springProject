@@ -23,6 +23,7 @@
          --%>
          
          <form role="form" action="/bookCon/books/update" method="post">
+         
             <div class="form-group form-group-lg">
                 <label class="control-label">도서 제목</label>
                 <input name="title" type="text" class="form-control" value="${vo.title }">
@@ -32,6 +33,15 @@
                 <label class="control-label">저자</label>
                 <input name="author" type="text" class="form-control" value="${vo.author}">
             </div>
+            
+	<c:forEach var="error" items="${fieldErrors }">
+		<div class="alert alert-warning">
+			<strong>${error.getField() }</strong>
+			  :  ${error.getDefaultMessage()}
+		</div>
+	</c:forEach>
+	            
+			            
             <div class="form-group form-group-lg">
                 <label class="control-label">이미지</label>
                 <input name="image" type="text" class="form-control" value="${vo.image }">

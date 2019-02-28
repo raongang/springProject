@@ -6,16 +6,24 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.mapper.BookMapper;
 import com.mycompany.mapper.ReviewMapper;
@@ -38,19 +46,18 @@ public class BookController {
 	@Autowired
 	private ReviewMapper reviewMapper;
 	
-	/*
-    @RequestMapping(value = "/", method = GET)
-    public String home(Locale locale, Model model) {
-        Date date = new Date();
-        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-        String formattedDate = dateFormat.format(date);
-        model.addAttribute("serverTime", formattedDate);
-        // 기존 "home.jsp"에서 변경
-        //  형태로 페이지를 요청하였으므로,
-        // tiles.xml 설정에 의해 content로 전송 됨.
-        return "statics/home";
-    }*/
-    
+	/**	
+	   WebDataBinder - 스프링을 베이스로 한 웹 애플리케이션에서 데이터 바인딩을 구현한 오브젝트
+	   StringTrimmerEditor Class - 웹어플에서 입력란에 아무것도 입력하지 않고 요청할 경우 getParameter를 하면 null이 아닌 공백이 들어온다. 
+	   이를 방지하기 위해서 사용함
+	   StringTrimmerEditor 오브젝트는 String 오브젝트의 trim메소드의 결과로 변환해주는 PropertyEditor이지만,
+	   생성자에 true를 넣으면 공백을 null로 변환해주므로 매우 유용
+    */
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		logger.info("Init Binder enter!!");
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
 	
 	/**
 	 * BOOK MENU LIST 
@@ -97,15 +104,33 @@ public class BookController {
 		return "books/updateForm";
 	}
 	
+	/**
+	 *  데이터 바인딩, 검증 이벤트 구현
+	 *  데이터 바인딩이 자동으로 진행되고 @Valid에 의해서 자동으로 검증처리가 진행된다.
+	 *  @Valid에 의한 검증결과인 Errors 오브젝트가 erros에 저장된다.
+	 *  
+	 *   Erros 오브젝트는 반드시 대상으로 하는 ModelAttribute 오브젝트의 뒤에 위치해야 한다.
+	 *   
+	 *   Errors 대신 BindingResult 를 써도 됨.
+	 */
+	
 	@RequestMapping(value="/books/update",method=POST)
-	public String update(@ModelAttribute BookVO bookVO) throws Exception{
+	public String update(@Valid @ModelAttribute BookVO bookVO, Errors erros, RedirectAttributes attr) throws Exception{
 		logger.info("update enter");
 		logger.info("bookVO Content >> " + bookVO.toString());
+		
+		if(erros.hasErrors()) {
+			List<FieldError> fieldErrors= erros.getFieldErrors();
+			attr.addFlashAttribute("fieldErrors",fieldErrors);
+			attr.addFlashAttribute("bookVO",bookVO);
+			return "redirect:/bookCon/books/update/"+bookVO.getId();
+		}
+		
 		
 		//업데이트된 개수 : result - 여기 예외처리하는거 있는지 보기.
 		int result = bookMapper.updateBook(bookVO);
 		logger.info("update result >> " + result);
-		return "redirect:/bookCon/books";
+		return "redirect:/bookCon/books"; 
 	}
 	
 	
