@@ -3,17 +3,17 @@
 <%@ include file="/WEB-INF/include/header.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-
 <title>Books NEW</title>
 </head>
+
 <body>
     <div class="container">
         <div class="jumbotron">
             <h1>Books NEW</h1>
             <p>views/books/new.jsp</p>
         </div>
+        
          <!-- <form action="<c:url value="/books" />" method="post">-->
          <%-- c:url안쓰고 
          	<form role="form" ...>
