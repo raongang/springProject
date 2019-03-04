@@ -5,25 +5,47 @@
 <html lang="ko">
 <head>
 <title>Books NEW</title>
+
+<%--로딩바 가운데정렬
+   추가사항 : 로딩바 가운데 뜰때 뒷배경 흐려지면서 아무 동작 못하게 해야 한다.
+--%>
+<style>
+div.loader img {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) }
+</style>
+
 </head>
 
 <script>
-	<%--로딩바 관련 - 추후 검토 필요 
-	    원래는 ajax이용해서 쓰는게 제일 좋음.
-	--%>
 	$(document).ready(function(){
-		$('#loader').hide();
+		$('#loader').show();
+		//$('#loader').hide();
 		$(".btn-primary").on("click",function(e){
-			$('#loader').show();
+			//$('#loader').show();
 		});
 	});
 </script>
 
 <body>
 	<%-- 로딩바 관련 - 추후 검토 필요, 가운데 정렬해야함. --%>
-	<div id="loader" style="position: fixed; top:0; left:0; width:100%; height: 100%;">
+	<div class="loader">
 		<img src='/resources/img/loadingbar.gif'/>
 	</div>
+	 
+	 <!-- bootstrap4의 가운데 정렬
+	<div class="container mt-5">
+	  <div class="row">
+	    <div class="col d-flex justify-content-center">
+	      <img src="/resources/img/loadingbar.gif" alt="" class="img-fluid">
+	    </div>
+	  </div>
+	</div>
+	 -->
     
     <div class="container">
         <div class="jumbotron">
