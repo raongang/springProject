@@ -59,6 +59,12 @@ public class BookController {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 	
+	@RequestMapping(value="/test", method=GET)
+	public String test() throws Exception{
+		logger.info("test enter");
+		return "test";
+	}
+	
 	/**
 	 * BOOK MENU LIST 
 	 * Model Class - 스프링 MVC에서 제공하는 데이터 전달용 객체

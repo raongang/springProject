@@ -11,25 +11,24 @@
 --%>
 <style>
 div.loader img {
-    margin: 0;
-    position: absolute;
+	position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -50%) }
+    transform: translate(-50%, -50%); 
+    }
 </style>
-
-</head>
 
 <script>
 	$(document).ready(function(){
-		$('#loader').show();
-		//$('#loader').hide();
+		$(".loader").show();
 		$(".btn-primary").on("click",function(e){
-			//$('#loader').show();
+			$(".loader").hide();
 		});
 	});
 </script>
+
+</head>
 
 <body>
 	<%-- 로딩바 관련 - 추후 검토 필요, 가운데 정렬해야함. --%>
@@ -77,4 +76,5 @@ div.loader img {
         </form>
     </div>
 </body>
+
 </html>

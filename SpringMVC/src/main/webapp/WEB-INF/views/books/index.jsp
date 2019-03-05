@@ -3,8 +3,8 @@
 <%@ include file="/WEB-INF/include/header.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-  </head>
+<head>
+</head>
   <script>  	
 	$(document).ready(function(){
 		<%-- ajax 방식
