@@ -16,6 +16,12 @@
 <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
+<!-- Loading overlay -->
+<script src="/resources/loading_overlay/loadingoverlay.min.js"></script>
+
+
+
+
 
 
 
