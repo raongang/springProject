@@ -36,17 +36,19 @@
 		
 		//단순 modal 팝업창만 보여주고 get으로 통신.
 		$(".btn_delete").on("click",function(e){
-			var id = $("#book_id").val();
+			//foreach에서 삭제를 클릭한 id를 가져와야한다. 
+			var id = $(this).data("book_id");
+			console.log("===============================");
+			console.log(id);
 			$("#confirmModal").modal('show');//modal confirm 실행.
 			$(".modal_delete").on("click",function(e){ //modald 클릭시 삭제
-				console.log("click");
 				self.location="/bookCon/books/delete/"+id;
 			}); //end .modal_delete
 		}); //end .btn_delete
 
 		//상세페이지
 		$(".image_title").on("click",function(e){
-			var id = $("#book_id").val();
+			var id= $(this).data("book_id");
 			self.location="/bookCon/books/detailReview/"+id;
 		});
 		
@@ -62,20 +64,19 @@
 		<p>views/books/index.jsp</p>
 		 --%>
     </div>
-
 	<div class="row">
 	    <c:forEach var="book" items="${bookVO}" varStatus="status">
 	        <div class="col-md-4">
 	            <div class="img-thumbnail">
 	                <!-- img 손 모양 -->
-	                <img src="${ book.image }" alt="bookImage" style="cursor:pointer;width:100%;" class="image_title" />
+	                <img src="${ book.image }" alt="bookImage" style="cursor:pointer;width:100%;" class="image_title" data-book_id="${book.id}"/>
 	                <div class="caption">
 	                    <h3>${ book.title } <small>${ book.author }</small></h3>
-	                    <input name="book_id" type="hidden" id="book_id" value="${book.id }"><!-- ajax에서쓰기위해 -->
-	                    <!--<a href="<c:url value='/bookCon/books/delete/${book.id}' />" class="">삭제</a>  modal confirm ajax로 변경 -->
-	                    <a href="<c:url value='/bookCon/books/update/${book.id}' />" class="btn btn-lg btn-info btn_update">수정</a>
-	                    <button type="submit" class="btn btn-lg btn-danger btn_delete">삭제</button> 
-	                    
+	                    <input name="book_id" type="hidden" id="book_id" value="${book.id}"><!-- ajax에서쓰기위해 -->
+	                    <!--<a href="<c:url value='/bookCon/books/delete/${book.id}' />" class="">삭제
+	                    </a>  modal confirm ajax로 변경 -->
+	                    <a href="<c:url value='/bookCon/books/update/${book.id}'/>" class="btn btn-lg btn-info btn_update">수정</a>
+	                    <button type="submit" class="btn btn-lg btn-danger btn_delete" data-book_id="${book.id}">삭제</button> 
 	                </div>
 	            </div>
 	        </div>
@@ -89,9 +90,6 @@
 		<c:url value="/bookCon/books_new" var="url" />
 		<a href="${url}" class="btn btn-lg btn-primary btn_register">Register</a>	    
 	</div>
-
-
-
   </body>
 </html>
 

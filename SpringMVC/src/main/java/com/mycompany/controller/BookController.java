@@ -218,8 +218,4 @@ public class BookController {
 		mv.addObject("exceptionMsg",e.getMessage());
 		return mv;
 	}
-	
-	
-
-	
 }//end controller
