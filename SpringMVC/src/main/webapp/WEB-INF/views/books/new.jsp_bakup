@@ -5,38 +5,60 @@
 <html lang="ko">
 <head>
 <title>Books NEW</title>
+
+<%--로딩바 가운데정렬
+   추가사항 : 로딩바 가운데 뜰때 뒷배경 흐려지면서 아무 동작 못하게 해야 한다.
+
+<style>
+div.loader img {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%); 
+    }
+</style>
+--%>
+
 <script>
+	<%--주석 -  로딩바가 가운데로 나오기는 하지만, 로딩바 뒤쪽 form양식 그대로 사용이 가능한 단점발생
+	$(document).ready(function(){
+		$(".loader-overlay").show();
+		$(".btn-primary").on("click",function(e){
+			$(".loader-overlay").hide();
+		});
+	});
+	 --%>
+	
+	 
 	<%-- 로딩 gif이미지 없이 사용하는 로딩바(스핀어) jquery사용--%> 
 	$(document).ready(function(){
-		//$(".btn-primary").on("click",function(e){
-		    $("#element").introLoader({
-		        animation: {
-		            name: 'simpleLoader',
-		            options: {
-		                exitFx:'slideUp',
-		                ease: "easeInOutCirc",
-		                style: 'dark',
-		            }
-		        },    
-		        spinJs: {
-		            lines: 13, // The number of lines to draw
-		            length: 13, // The length of each line
-		            width: 10, // The line thickness
-		            radius: 20, // The radius of the inner circle
-		            corners: 1, // Corner roundness (0..1)
-		        }
-			});
-		//});
-	});
-
-
+		$.LoadingOverlay("show");
+		//$.LoadingOverlay("hide");
+		$(".btn-primary").on("click",function(e){
+			$.LoadingOverlay("hide");
+		});
+	});	
+	
 </script>
 </head>
 
 <body>
-
-	<div id="element" class="introLoading"></div>
-
+	<%-- 주석 로딩바 관련 - 로딩바가 가운데로 나오기는 하지만, 로딩바 뒤쪽 form양식 그대로 사용이 가능한 단점발생
+	<div class="loader-overlay">
+		<div class="spin-loader"><img src='/resources/img/loadingbar.gif'/></div>		
+	</div>
+	--%>
+	
+	 <!-- bootstrap4의 가운데 정렬 => 이걸 이용하거나, <style>의 가운데 정렬 css를 이용해도 됨.
+	<div class="container mt-5">
+	  <div class="row">
+	    <div class="col d-flex justify-content-center">
+	      <img src="/resources/img/loadingbar.gif" alt="" class="img-fluid">
+	    </div>
+	  </div>
+	</div>
+	 -->
     
     <div class="container">
         <div class="jumbotron">

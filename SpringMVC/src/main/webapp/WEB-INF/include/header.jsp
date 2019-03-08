@@ -16,8 +16,18 @@
 <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
+<!-- jquery intro Loader -->
+
+<link  href="/resources/loader/css/introLoader.min.css">
+<script src="/resources/loader/jquery/jquery.easing.1.3.js"></script>
+<script src="/resources/loader/jquery/jquery.introLoader.pack.min.js"></script>
+<script src="/resources/loader/jquery/spin.min.js"></script>
+
+
 <!-- Loading overlay -->
 <script src="/resources/loading_overlay/loadingoverlay.min.js"></script>
+
+
 
 
 
