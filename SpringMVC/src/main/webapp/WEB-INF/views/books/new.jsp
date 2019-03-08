@@ -23,31 +23,32 @@ div.loader img {
 <script>
 	<%--주석 -  로딩바가 가운데로 나오기는 하지만, 로딩바 뒤쪽 form양식 그대로 사용이 가능한 단점발생
 	$(document).ready(function(){
-		$(".loader").show();
+		$(".loader-overlay").show();
 		$(".btn-primary").on("click",function(e){
-			$(".loader").hide();
+			$(".loader-overlay").hide();
 		});
 	});
-	--%>
+	 --%>
 	
-	<%-- 로딩 gif이미지 없이 사용하는 로딩바(스핀어) jquery사용 --%>
+	<%-- 로딩 gif이미지 없이 사용하는 로딩바(스핀어) jquery사용--%> 
 	$(document).ready(function(){
-		$.LoadingOverlay("hide");
+		$.LoadingOverlay("show");
+		//$.LoadingOverlay("hide");
 		$(".btn-primary").on("click",function(e){
-			$.LoadingOverlay("show");
+			$.LoadingOverlay("hide");
 		});
 	});	
-	
 	
 </script>
 </head>
 
 <body>
 	<%-- 주석 로딩바 관련 - 로딩바가 가운데로 나오기는 하지만, 로딩바 뒤쪽 form양식 그대로 사용이 가능한 단점발생
-	<div class="loader">
-		<img src='/resources/img/loadingbar.gif'/>
+	<div class="loader-overlay">
+		<div class="spin-loader"><img src='/resources/img/loadingbar.gif'/></div>		
 	</div>
 	--%>
+	
 	 <!-- bootstrap4의 가운데 정렬 => 이걸 이용하거나, <style>의 가운데 정렬 css를 이용해도 됨.
 	<div class="container mt-5">
 	  <div class="row">
