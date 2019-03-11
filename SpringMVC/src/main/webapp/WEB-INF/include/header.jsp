@@ -16,16 +16,17 @@
 <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- jquery intro Loader -->
-
+<!-- jquery intro Loader
+     loading bar가 뜰 경우 background는 실행안되게 제어가 안됨.. (즉, 로딩바 뒤쪽이 흐리게 안됨)
 <link  href="/resources/loader/css/introLoader.min.css">
 <script src="/resources/loader/jquery/jquery.easing.1.3.js"></script>
 <script src="/resources/loader/jquery/jquery.introLoader.pack.min.js"></script>
 <script src="/resources/loader/jquery/spin.min.js"></script>
+ -->
 
-
-<!-- Loading overlay -->
+<!-- Loading overlay--> 
 <script src="/resources/loading_overlay/loadingoverlay.min.js"></script>
+
 
 
 

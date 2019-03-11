@@ -18,8 +18,6 @@
 	    </div>
 	  </div><!-- modal fade -->
 	  
-	  
-	  <!-- MODAL Confirm창  -->
 	  <div class="modal fade modal-center" id="confirmModal" tabindex="-1" role="dialog">
 	  	<div class="modal-dialog modal-sm modal-center" role="document">
 	      <!-- Modal content-->

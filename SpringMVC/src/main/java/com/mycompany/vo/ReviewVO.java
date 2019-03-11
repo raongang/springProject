@@ -26,7 +26,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class ReviewVO {
 	Integer id;
-	
 	//@NotEmpty - Bean Validation 의 구현인 Hibernate Validator에 정의된 Annotation
 	@NotEmpty
 	String text;

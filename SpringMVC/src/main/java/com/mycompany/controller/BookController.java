@@ -62,7 +62,7 @@ public class BookController {
 	@RequestMapping(value="/test", method=GET)
 	public String test() throws Exception{
 		logger.info("test enter");
-		return "test";
+		return "user/login";
 	}
 	
 	/**
@@ -92,11 +92,10 @@ public class BookController {
 	public String create(@ModelAttribute BookVO bookVO) throws Exception {
 		logger.info("register enter");
 		logger.info(bookVO.toString());
-		
 		Thread.sleep(15000); //로딩바 테스트를 위한 강제 슬립.
-		bookMapper.register(bookVO);
-		
+		bookMapper.register(bookVO); 
 		return "redirect:/bookCon/books";
+		
 	}
 
 	
