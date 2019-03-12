@@ -74,6 +74,7 @@ div.loader img {
 	  	    - 컴퓨터의 리더기(시각장애인)를 이용해서 웹 페이지를 읽을때, 해당 부분이 form이라는 것을 알려준다.
          --%>
          
+         
          <form role="form" action="/bookCon/register" method="post">
             <div class="form-group form-group-lg">
                 <label class="control-label">도서 제목</label>
