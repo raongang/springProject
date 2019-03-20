@@ -85,7 +85,6 @@
 	<br/>
 	
 <%@ include file="/WEB-INF/include/modal.jsp" %>
-	
 	<div class="row">
 		<c:url value="/bookCon/books_new" var="url" />
 		<a href="${url}" class="btn btn-lg btn-primary btn_register">Register</a>	    
