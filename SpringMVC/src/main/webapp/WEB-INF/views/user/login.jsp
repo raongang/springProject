@@ -1,32 +1,52 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page pageEncoding="utf-8" session="false"%>
 <%@ include file="/WEB-INF/include/header.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <title>LOGIN FORM</title>
-
-<script>
-var loadingBar = document.getElementById("loadingBar");
-var divLoadBody = document.getElementById("divLoadBody");
-loadingBar.style.display = "none";
-divLoadBody.style.display = "";
-</script>
-
 </head>
-<body>
-<!-- Loding Image -->
-<div id="loadingBar" style="position:absolute; top:0; left:0; width:100%; height:100%; text-align:center; margin:0 auto; z-index:100000;">
-<table width="100%" height="100%" border="0" bgcolor="#000000">
-<tr><td align="center">
-  <div style="text-align:center;"><img src='/resources/img/loadingbar.gif'/></div>
-  <div style="margin-top:20px; color:#FFF; text-align:center; font-weight:bold;">L o a d i n g . . .</div>
-</td></tr>
-</table>
+
+<div class="jumbotron"><h1>Login</h1></div>
+<!-- c:url 꼭 적어야하나? 확인차 일단 작성해놓음
+<c:url var="loginPath" value="/user/login" />
+<c:url var="signUpPath" value="/user/signUp" />
+<form action="${loginPath}" method="post"></form>
+ -->
+<div>
+	<form id="loginForm" action="/user/login" method="POST">
+		<div class="form-group form-group-lg">
+			<div class="form-group">
+				<label>Email</label>
+				<input type="text" name="email" class="form-control" placeholder="Email.." />
+			</div>
+			
+			<div class="form-group">
+				<label>Password</label>
+				<input type="password" name="password" class="form-control" placeholder="Password.." />
+			</div>
+			
+			<div class="form-group">
+			</div>
+
+			<!-- id/pw 저장여부체크박스도 사용 -->
+			<div class="row">
+				<div class="col-xs-8">
+					<div class="checkbox icheck">
+						<label><input type="checkbox" name="useCookie"> Remember Me</label></div>
+				</div>
+			
+				<div class="form-action">
+					<input type="submit" class="btn btn-primary btn-lg" Value="Sign In">
+					<!-- 
+					<button type="submit" class="btn btn-primary btn-block btn-flat btn-login">Sign In</button>
+					 -->
+				</div>			
+			</div>			
+
+		</div>
+	</form>
+	
+	<a href="#">I forgot my password</a><br>
+	<a href="register.html" class="text-center">Register a new User</a>
 </div>
-<!-- Loading Image -->
-<div id="divLoadBody" style="display:none;">
-테스트합니다
-</div>
-</body>
 </html>
