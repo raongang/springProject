@@ -8,11 +8,24 @@
 
 <div class="jumbotron"><h1>Login</h1></div>
 <!-- c:url 꼭 적어야하나? 확인차 일단 작성해놓음
+
+c:url이 없으면 주소가 http://localhost:8080/user/login 이렇게 되어버린다.
+
 <c:url var="loginPath" value="/user/login" />
 <c:url var="signUpPath" value="/user/signUp" />
 <form action="${loginPath}" method="post"></form>
- -->
+
+<div>pageContext.request.contextPath >> ${pageContext.request.contextPath}</div><%--여기 null나오네? 원인을 모르겠다 --%>
+<div>pageContext.request.serverName >> ${pageContext.request.serverName}</div>
+<div>pageContext.request.serverPort >> ${pageContext.request.serverPort}</div>
+<div>pageContext.request.scheme >> ${pageContext.request.scheme}</div>
+<div>pageContext.request.requestURL >> ${pageContext.request.requestURL}</div>
+<div>pageContext.request.requestURI >> ${pageContext.request.requestURI}</div>
+<div>pageContext.request.contextPath >> ${pageContext.request.contextPath}</div>	
+-->
+
 <div>
+    
 	<form id="loginForm" action="/user/login" method="POST">
 		<div class="form-group form-group-lg">
 			<div class="form-group">
@@ -37,6 +50,7 @@
 			
 				<div class="form-action">
 					<input type="submit" class="btn btn-primary btn-lg" Value="Sign In">
+					<a href="/user/signUp" class="btn btn-info btn-lg">Register</a>
 					<!-- 
 					<button type="submit" class="btn btn-primary btn-block btn-flat btn-login">Sign In</button>
 					 -->
