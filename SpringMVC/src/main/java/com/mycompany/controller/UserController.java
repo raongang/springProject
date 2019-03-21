@@ -13,7 +13,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.mapper.UserMapper;
 import com.mycompany.vo.User;
@@ -39,7 +38,6 @@ public class UserController {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 	
-	
 	//처음로그인시 메인화면으로 전달
 	@RequestMapping(value="/login", method=GET)
 	public String login() {
@@ -55,10 +53,17 @@ public class UserController {
 		return "user/signup";
 	}
 	
+	/* TEST용
 	@ResponseBody
 	@RequestMapping(value="/signup",method=POST)
 	public String register(@ModelAttribute User user) {
 		return user.toString();
+	}*/
+	
+	@RequestMapping(value="/signup",method=POST)
+	public String register(@ModelAttribute User user) {
+		userMapper.insertUser(user);
+		return "redirect:/login";
 	}
 	
 	
