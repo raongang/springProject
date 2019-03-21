@@ -1,6 +1,5 @@
 package com.mycompany.controller;
 
-
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -194,7 +193,6 @@ public class BookController {
 		return "books/detail";
 		
 	}
-	
 	
 	/**
 	 *  CustomerControllAdvice.java로 이동 

@@ -75,12 +75,17 @@
 		<property name="sqlSessionFactory" ref="SqlSessionFactory" />
 	</bean> 
 	
-	<!-- Mapper 등록 -->
+	<!-- 리뷰 Mapper 등록 -->
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="com.mycompany.mapper.ReviewMapper" />
 		<property name="sqlSessionFactory" ref="SqlSessionFactory" />
 	</bean>
 	
+	<!-- SignUp Mapper 등록  -->
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.mycompany.mapper.UserMapper" />
+		<property name="sqlSessionFactory" ref="SqlSessionFactory" />
+	</bean>
 	
 	<!-- 
 		springMVC와 관련된 spring의 기능 

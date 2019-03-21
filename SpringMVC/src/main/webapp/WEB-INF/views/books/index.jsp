@@ -75,6 +75,8 @@
 	                    <input name="book_id" type="hidden" id="book_id" value="${book.id}"><!-- ajax에서쓰기위해 -->
 	                    <!--<a href="<c:url value='/bookCon/books/delete/${book.id}' />" class="">삭제
 	                    </a>  modal confirm ajax로 변경 -->
+	                    
+	                    <!-- rest 이용하듯이 URI형태로 전달 -->
 	                    <a href="<c:url value='/bookCon/books/update/${book.id}'/>" class="btn btn-lg btn-info btn_update">수정</a>
 	                    <button type="submit" class="btn btn-lg btn-danger btn_delete" data-book_id="${book.id}">삭제</button> 
 	                </div>
