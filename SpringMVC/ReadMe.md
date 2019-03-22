@@ -15,6 +15,8 @@
 
  3. 추후 보강사항 
    3-1) 검증(validation)부분 조금 더 찾아보고 보강하기
-   3-2) <form:form 보강 및 내용좀 찾아보기
-    
+   3-2) <form:form 보강 및 내용좀 찾아보기 
+   3-3) 로그인 미구현 기능 추가해야 한다
+       - 로그인 성공시 정상적으로 index page이동
+       - 로그인과 로그아웃시 세션처리 (Spring session 처리 연계해서 하기 ( @SessionAttributes) 관련 다시 보기  )
  

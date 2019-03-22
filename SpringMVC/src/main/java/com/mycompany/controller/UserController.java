@@ -45,6 +45,26 @@ public class UserController {
 	}
 	
 
+	/**
+	 * 
+	   <pre>
+	    1 내용 : signUp시 데이터가 없더라도 Model을 선언한 이유는 /user/signup jsp에서
+	    <form:form modelAttribute="user" action="${signUpPath}" method="POST"> 의 modelAttribute가 선언되어 
+	    있기 때문
+	   </pre>
+	   
+	   2. 내용 :  Model
+		- 스프링MVC가 준비하는 오브젝트(즉,스프링MVC에서 자동으로 만들어준다는 의미임)
+		- 컨트롤러에서 뷰로 넘겨줄 오브젝트를 저장하기 위한 오브젝트
+		- HttpServletRequest와 HttpSession처럼 String형 키와 오브젝트를 연결해서 오브젝트를 유지
+			
+		ModelAttribute
+		 - 자동으로 해당 객체를 뷰까지 전달하도록 만드는 애노테이션
+	 * 
+	 *  @Author : raongang
+	 *  @Date   : 2019. 3. 22.
+	 */
+	
 	@RequestMapping(value="/signup", method=GET)
 	public String signup(Model model) {
 		User user = new User();
@@ -52,6 +72,9 @@ public class UserController {
 		model.addAttribute("user",user);
 		return "user/signup";
 	}
+	
+
+	
 	
 	/* TEST용
 	@ResponseBody

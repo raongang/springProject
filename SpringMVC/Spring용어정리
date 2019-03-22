@@ -23,9 +23,6 @@
            productService.addProduct(new Product("ホチキス", 100));
            Product product = productService.findByProductName("ホチキス");
            System.out.println(product); 
-               
-  
-  
   
 ContextPath 고찰
 

@@ -69,23 +69,27 @@
 	</bean>	
 	-->
 	
-	<!-- dao와 같은 데이터접근객체대신 mapper를 직접등록 -->
+	<!-- dao와 같은 데이터접근객체대신 mapper를 직접등록
 	<bean id="bookMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="com.mycompany.mapper.BookMapper"/>
 		<property name="sqlSessionFactory" ref="SqlSessionFactory" />
 	</bean> 
 	
-	<!-- 리뷰 Mapper 등록 -->
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="com.mycompany.mapper.ReviewMapper" />
 		<property name="sqlSessionFactory" ref="SqlSessionFactory" />
 	</bean>
 	
-	<!-- SignUp Mapper 등록  -->
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="com.mycompany.mapper.UserMapper" />
 		<property name="sqlSessionFactory" ref="SqlSessionFactory" />
 	</bean>
+	-->
+	
+	<!-- Mapper를 매번 생성할 필요없이 한번에 정의한다. 
+	     mybatis 스키마를 적용해주어야함. 
+	 -->
+	<mybatis-spring:scan base-package="com.mycompany.mapper" />
 	
 	<!-- 
 		springMVC와 관련된 spring의 기능 
