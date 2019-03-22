@@ -38,12 +38,29 @@ public class UserController {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 	
+	
+	//로그인성공시 메인화면으로 이동
+	//기본 MVC에서는 여기서 session등록을 했을 것이다.
+	@RequestMapping(value="/user/login", method=POST)
+	public String main(@ModelAttribute User user) {
+		logger.info("/user/login  POST enter");
+		logger.info("user infomation >> " + user.toString());
+		
+		int result = userMapper.getLoginInfo(user);
+		if(result==1) {
+			return "redirect:/bookCon/books";
+		}else {
+			return "redirect:/login";
+		}
+		
+	}
+	
+	
 	//처음로그인시 메인화면으로 전달
 	@RequestMapping(value="/login", method=GET)
 	public String login() {
 		return "user/login";
 	}
-	
 
 	/**
 	 * 
@@ -73,9 +90,6 @@ public class UserController {
 		return "user/signup";
 	}
 	
-
-	
-	
 	/* TEST용
 	@ResponseBody
 	@RequestMapping(value="/signup",method=POST)
@@ -88,6 +102,9 @@ public class UserController {
 		userMapper.insertUser(user);
 		return "redirect:/login";
 	}
+	
+	
+	
 	
 	
 }
