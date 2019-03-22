@@ -24,12 +24,22 @@ public class LoginSessionMgr {
 		request.getSession().setAttribute(LOGIN_SESSION_ID, user);
 	}
 	
-	//로그인 정보를 세션에 SET
+	//로그인 정보를 세션에 GET
 	public static User getLoginInfo(HttpServletRequest request) {
 		if(request.getSession().getAttribute(LOGIN_SESSION_ID)!=null) {
 			return (User)request.getSession().getAttribute(LOGIN_SESSION_ID);
 		}
 		return null;
 	}
+	
+	/**
+	 * 로그인 정보를 세션에서 REMOVE
+	 * @param request
+	 * @return
+	 */
+	public static void removeLoginInfo(HttpServletRequest request){
+		request.getSession().removeAttribute(LOGIN_SESSION_ID);
+	}
+	
 	
 }
