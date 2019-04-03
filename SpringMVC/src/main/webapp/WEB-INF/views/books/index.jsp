@@ -65,11 +65,20 @@
 		 --%>
     </div>
     
-    <div class="row">
-		<!-- logout test용 페이지생성 -->
-		<a href="/user/logout" class="btn btn-info btn-lg">logout</a>
+    <!-- Searching FORM -->
+    <div class="search">
+    	<form class="">
+    		<div class="row">
+    			<div class="col-md-10">
+    				<input type="text" class="form-control input-lg" placeholder="Search For Book Name..">
+    			</div>
+    			<div class="col-md-2">
+    				<input type="submit" class="btn btn-primary btn-sg" Value="검색">
+				</div>
+    		</div>
+    	</form>
     </div>
-    
+
     
 	<div class="row">
 	    <c:forEach var="book" items="${bookVO}" varStatus="status">
@@ -96,8 +105,11 @@
 <%@ include file="/WEB-INF/include/modal.jsp" %>
 	<div class="row">
 		<c:url value="/bookCon/books_new" var="url" />
-		<a href="${url}" class="btn btn-lg btn-primary btn_register">Register</a>	    
+		<a href="${url}" class="btn btn-lg btn-primary btn_register">Register</a>
+		&nbsp;&nbsp;&nbsp;
+		<a href="/user/logout" class="btn btn-lg btn-info ">logout</a>	    
 	</div>
+		
   </body>
 </html>
 
