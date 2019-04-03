@@ -64,6 +64,13 @@
 		<p>views/books/index.jsp</p>
 		 --%>
     </div>
+    
+    <div class="row">
+		<!-- logout test용 페이지생성 -->
+		<a href="/user/logout" class="btn btn-info btn-lg">logout</a>
+    </div>
+    
+    
 	<div class="row">
 	    <c:forEach var="book" items="${bookVO}" varStatus="status">
 	        <div class="col-md-4">
