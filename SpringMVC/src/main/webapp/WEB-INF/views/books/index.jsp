@@ -1,4 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page pageEncoding="utf-8" session="false"%>
 <%@ include file="/WEB-INF/include/header.jsp" %>
 <!DOCTYPE html>
@@ -52,11 +51,32 @@
 			self.location="/bookCon/books/detailReview/"+id;
 		});
 		
+		//자동완성기능.- jqueryUI이용
+		$("#searchBook").autocomplete({
+			source : function(request,response){
+				$.ajax({
+					type : 'GET',
+					url : "<c:url value='/api/books/search'/>",
+					data : { term : request.term },
+					success : function(data){
+						var bookList = data.bookList;
+						response($.map(bookList,function(item){
+							return item.title;
+						}));
+					}//end success
+				});//end ajax
+			}//end source
+		}); //end 
+		
+	
+		
+		
 	}); //end document
   </script>
   
   <body class="container">
   
+  	
   	<!-- MAIN FORM -->
     <div class="jumbotron">
     	<h1>Books LIST</h1>
@@ -65,8 +85,9 @@
 		 --%>
     </div>
     
-    <!-- Searching FORM -->
+    <!-- normal Searching FORM1
     <div class="search">
+    
     	<form role="form" action="/bookCon/search" method="post">
     		<div class="row">
     			<div class="col-md-10">
@@ -78,6 +99,27 @@
     		</div>
     	</form>
     </div>
+    -->
+    
+    <!-- 자동완성 Searching FORM1  -->
+    <div class="search">
+    	<c:url var="booksSearchPath" value="/bookCon/search" />
+    	<!-- get이라 http://localhost:8080/bookCon/search?query= 이런식으로 주소가 붇는다. --> 
+    	<form role="form" action="${booksSearchPath}" method="get">
+    		<div class="row">
+    			<div class="col-md-10">
+    				<input name="query" id="searchBook" type="text" class="form-control input-lg" placeholder="Search For Book Name..">
+    			</div>
+    			<div class="col-md-2">
+    				<button type="submit" class="form-control input-lg btn btn-primary">
+    					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>Search
+    				</button>
+    				
+				</div>
+    		</div>
+    	</form>
+    </div>
+    
 
     
 	<div class="row">

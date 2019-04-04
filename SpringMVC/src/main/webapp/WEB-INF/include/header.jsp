@@ -9,12 +9,18 @@
 <%--반응형 기능을 사용하지 않을때는 주석--%>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-<!-- jquery 1.9.1 -->
+<!-- jquery 1.9.1--> 
 <script src="/resources/jquery/jquery-1.9.1.min.js"></script>
+
+<!--  jquery UI  -->
+<script src="/resources/jquery/jquery-ui.js"></script>
+<link href="/resources/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <!-- Bootstrap 4.3.1 -->
 <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+
+
 
 <!-- jquery intro Loader
      loading bar가 뜰 경우 background는 실행안되게 제어가 안됨.. (즉, 로딩바 뒤쪽이 흐리게 안됨)
@@ -26,6 +32,7 @@
 
 <!-- Loading overlay--> 
 <script src="/resources/loading_overlay/loadingoverlay.min.js"></script>
+
 
 
 

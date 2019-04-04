@@ -36,7 +36,7 @@
 	     View : 뷰에 화면표시 처리를 의뢰
 	    
 	     UrlBasedViewResolver의 서브클래스인 InternalResourceViewResolver가 등록됨. 
-		order번호가 낮은게 우선순위가 높다 
+		 order번호가 낮은게 우선순위가 높다. 
 		
      ViewResolver의 종류
          UrlBasedViewResolver를 제일 많이 사용하는데, 어느 뷰 기반으로 오브젝트가 생성되는가는 
@@ -56,6 +56,24 @@
 	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	    <beans:property name="order" value="1" />
 	</beans:bean>
+	
+	<!-- 자동완성 관련 JSON View 설정 -->
+	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
+		<beans:property name="contentType" value="application/json;charset=UTF-8"></beans:property>
+	</beans:bean>
+	
+	<!-- JsonViewResolver -->
+	<!-- BeanNameViewResolver 
+		DI컨테이너에서 Bean이름이 뷰 이름인 View오브젝트 반환
+		뷰 리졸버가 등록된 DI컨테이너로부터 View오브젝트 취득
+		설정 파일의형식 : Bean 정의 파일로서 정의
+	 -->
+	
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0" />
+	</beans:bean>	
+	
+	
 	
 	<!-- Tiles 설정 파일 -->
 	<beans:bean id="tilesConfigurer"

@@ -105,7 +105,7 @@ public class BookController {
 		return "books/updateForm";
 	}
 	
-	//BOOK SEARCH
+	//NORMAL BOOK SEARCH
 	@RequestMapping(value="/search" , method=POST)
 	public String searchBook(@ModelAttribute BookVO bookVO, Model model) throws Exception{
 		logger.info(">> search Book enter");

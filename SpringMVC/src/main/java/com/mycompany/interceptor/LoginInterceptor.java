@@ -40,11 +40,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			
 			logger.info("LoginInterceptor prehandle enter");
 			
-			HandlerMethod method = (HandlerMethod)handler;
-			Method methodObj = method.getMethod();
-			
-			logger.info("Bean : " + method.getBean());
-			logger.info("Method : " + methodObj);
+
+			/**
+			 * 2019-04-04 raongang  여기가 왜 에러 나는지 의문
+			 *  - jquery-ui.js or jquery-ui.css만 하면 여기서 에러 난다.
+			 *  - 다른 버전으로 해도 동일. 원인이 뭐지.......ㅠㅠ
+			 */
+			//HandlerMethod method = (HandlerMethod)handler;
+			//Method methodObj = method.getMethod();
+
 			
 			//기존에 로그인된 아이디가 있으면 삭제한다.
 			HttpSession session = request.getSession();
