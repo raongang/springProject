@@ -58,15 +58,11 @@ public class BookController {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 	
-	@RequestMapping(value="/login", method=GET)
-	public String test() throws Exception{
-		logger.info("Login Enter");
-		return "user/login";
-	}
 	/**
 	 * BOOK MENU LIST 
 	 * Model Class - 스프링 MVC에서 제공하는 데이터 전달용 객체
 	 * 과거 Servlet에서는 RequestDispatcher에 데이터를 저장했듯이, 스프링에서는 Model을 이용하여 데이터를 저장.
+	 * Model 은 스프링에서 만들어주는 객체이다.
 	 */	
 	@RequestMapping(value = "/books", method = GET) 
 	public String index(Model model) throws Exception {
@@ -102,11 +98,33 @@ public class BookController {
 	@RequestMapping(value="/books/update/{id}", method=GET)
 	public String update(@PathVariable("id") Integer id, Model model) throws Exception{
 		logger.info("updateForm enter ID >>" + id);
-
+		
 		BookVO vo = bookMapper.getBookInfo(id);
 		model.addAttribute("vo",vo);
 		
 		return "books/updateForm";
+	}
+	
+	//BOOK SEARCH
+	@RequestMapping(value="/search" , method=POST)
+	public String searchBook(@ModelAttribute BookVO bookVO, Model model) throws Exception{
+		logger.info(">> search Book enter");
+		logger.info("book list : " + bookVO.toString());
+		
+		List<BookVO> vo = null;
+		
+		//키워드를 입력하지 않고 눌렀을 경우에는 전체 검색을 한다.
+		if(bookVO.getTitle()==null) {
+			vo = bookMapper.getList();
+		}else {
+			//search title
+			vo = bookMapper.getSearchBook(bookVO.getTitle());
+		}
+		
+		model.addAttribute("bookVO", vo);
+		
+		return "books/index";
+		
 	}
 	
 	/**
@@ -214,4 +232,6 @@ public class BookController {
 		mv.addObject("exceptionMsg",e.getMessage());
 		return mv;
 	}
+	
+	
 }//end controller

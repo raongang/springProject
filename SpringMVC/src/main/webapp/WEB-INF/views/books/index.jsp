@@ -67,10 +67,10 @@
     
     <!-- Searching FORM -->
     <div class="search">
-    	<form class="">
+    	<form role="form" action="/bookCon/search" method="post">
     		<div class="row">
     			<div class="col-md-10">
-    				<input type="text" class="form-control input-lg" placeholder="Search For Book Name..">
+    				<input name="title" type="text" class="form-control input-lg" placeholder="Search For Book Name..">
     			</div>
     			<div class="col-md-2">
     				<input type="submit" class="btn btn-primary btn-sg" Value="검색">

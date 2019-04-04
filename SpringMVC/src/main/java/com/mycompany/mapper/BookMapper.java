@@ -30,4 +30,7 @@ public interface BookMapper {
 	@Delete("delete from books where id=#{id}")
 	public int deleteBook(@Param("id") Integer id);
 	
+	@Select("select * from books where title=#{title}")
+	public List<BookVO> getSearchBook(@Param("title") String title);
+	
 }

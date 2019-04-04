@@ -16,14 +16,12 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<context:component-scan base-package="com.mycompany.controller" />
 	
-	
 	<!-- Enables the Spring MVC @Controller programming model -->
     <annotation-driven />     
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	
 	
 	<!-- 
 	  ViewResolver란? 
@@ -53,7 +51,6 @@
 		<beans:property name="order" value="2" />
 	</beans:bean>
 	
-	
 	<!-- 2번 -->
 	<beans:bean id="tielsViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
@@ -70,8 +67,33 @@
 	    </beans:property>
 	</beans:bean>
 	
-		
+	<!-- Interceptor 기능 추가
+	<beans:beans xmlns="http://www.springframework.org/schema/mvc" 이런식으로 namespace가 정의 안되면 아래와같이 작성도 가능>
+	</beans:beans>
+	 -->
+	 
+	<!-- 인터셉터 설정 끝 : xmlns:mvc="http://www.springframework.org/schema/mvc" 이 부분 선언되어야 한다.
+	     사실상 위의 설정과 같은 의미이다. 젤 위에 beans설정에 따라 차이가 있을뿐. 
+	   여기서는 mvc로 정의를 했기 때문에 mvc:interceptor를 사용하는 것이다. 
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<beans:bean id="sampleInterceptor" class="org.zerock.interceptor.SampleInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	-->		 
 	
+	<beans:bean id="loginInterceptor" class="com.mycompany.interceptor.LoginInterceptor"></beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<!-- 
+			<mapping path="/user/login" />
+			 -->
+			<mapping path="/**" />
+			<beans:ref bean="loginInterceptor" />
+		</interceptor>
+	</interceptors>
 	
 	
 	
