@@ -33,4 +33,30 @@ public interface BookMapper {
 	@Select("select * from books where title=#{title}")
 	public List<BookVO> getSearchBook(@Param("title") String title);
 	
+	
+	/**
+	 * 
+	   <pre>
+	    1 내용 
+	   </pre>
+	 *  @Author : raongang
+	 *  @Date   : 2019. 4. 5.
+	 *  
+	 *  주의사항 :
+	 *  LIKE '%#{title}%' -------->> LIKE '%'title'%' 변환됨 ( SQLException 발생 )
+	 *  
+	 *  해결방안 : 
+	 *   1. RDBMS 에서 제공하는 Built-In 함수를 사용
+	 *    - for Oracle:   WHERE GAME_ID LIKE '%' || #{title} || '%'
+	 *	  - for MySQL :   WHERE GAME_ID LIKE CONCAT('%', #{title}, '%')
+     *
+	 *	 2. RDBMS 상관없이 간단하게 쓸수 있는 법
+     *       - WHERE GAME_ID LIKE  '%${title}%'
+     *       - $를 쓰게 될 경우, iBatis에서도 '' <ㅡ 이렇게 따옴표를 감싸지 않고 Direct하게 받게 해주는 속성이다.
+	 *   
+	 *   
+	 */
+	@Select("select * from books where title like '%${title}%'")
+	public List<BookVO> search(@Param("title") String title);
+
 }

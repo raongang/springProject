@@ -51,13 +51,13 @@
 			self.location="/bookCon/books/detailReview/"+id;
 		});
 		
-		//자동완성기능.- jqueryUI이용
+		/* 자동완성기능.- jqueryUI이용, JsonViewResolver , JSON View이용 */
 		$("#searchBook").autocomplete({
 			source : function(request,response){
 				$.ajax({
-					type : 'GET',
-					url : "<c:url value='/api/books/search'/>",
-					data : { term : request.term },
+					type : 'get',
+					url : '/api/books/search',
+					data : { title : request.term },
 					success : function(data){
 						var bookList = data.bookList;
 						response($.map(bookList,function(item){
@@ -66,9 +66,37 @@
 					}//end success
 				});//end ajax
 			}//end source
-		}); //end 
+		}); //end autocomplete
 		
-	
+		
+/* 		 위의 Json View를 이용하지 않고 여기서 바로 처리 - 테스트용
+		$("#searchBook").autocomplete({
+			source : function(request,response){
+				
+				//var tmp = request.term;
+				//string으로 변환시킨다.
+				//var trnas_json = JSON.stringify(tmp);
+				
+				$.ajax({
+					type : 'get',
+					contentType : 'application/json;charset=UTF-8', //서버로 보낼 타입		
+					dataType : 'json', //서버에서 반환될 타입
+					url : '/api/books/search',
+					data : { "title" : request.term },
+					success : function(data){
+						
+						var bookList = data.bookList;
+						
+						console.log(">>booklist" + bookList);
+						
+						response($.map(bookList,function(item){
+							return item.title;
+						}));
+					}//end success
+				});//end ajax
+			}//end source
+		}); //end autocomplete	 */	
+		
 		
 		
 	}); //end document
@@ -84,31 +112,15 @@
 		<p>views/books/index.jsp</p>
 		 --%>
     </div>
-    
-    <!-- normal Searching FORM1
-    <div class="search">
-    
-    	<form role="form" action="/bookCon/search" method="post">
-    		<div class="row">
-    			<div class="col-md-10">
-    				<input name="title" type="text" class="form-control input-lg" placeholder="Search For Book Name..">
-    			</div>
-    			<div class="col-md-2">
-    				<input type="submit" class="btn btn-primary btn-sg" Value="검색">
-				</div>
-    		</div>
-    	</form>
-    </div>
-    -->
-    
-    <!-- 자동완성 Searching FORM1  -->
+
     <div class="search">
     	<c:url var="booksSearchPath" value="/bookCon/search" />
-    	<!-- get이라 http://localhost:8080/bookCon/search?query= 이런식으로 주소가 붇는다. --> 
-    	<form role="form" action="${booksSearchPath}" method="get">
+    	<!-- get이라 http://localhost:8080/bookCon/search?query= 이런식으로 주소가 붇는다. 
+    	 -->
+    	 <form role="form" action="${booksSearchPath}" method="get">
     		<div class="row">
     			<div class="col-md-10">
-    				<input name="query" id="searchBook" type="text" class="form-control input-lg" placeholder="Search For Book Name..">
+    				<input name="title" id="searchBook" type="text" class="form-control input-lg" placeholder="Search For Book Name..">
     			</div>
     			<div class="col-md-2">
     				<button type="submit" class="form-control input-lg btn btn-primary">
@@ -118,7 +130,7 @@
 				</div>
     		</div>
     	</form>
-    </div>
+    </div>   
     
 
     

@@ -92,7 +92,6 @@ public class BookController {
 		
 	}
 
-	
 	// BOOK UPDATE
 	// @PathVariable - URI 경로에서 원하는 데이터를 추출하는 용도로 사용.
 	@RequestMapping(value="/books/update/{id}", method=GET)
@@ -106,7 +105,7 @@ public class BookController {
 	}
 	
 	//NORMAL BOOK SEARCH
-	@RequestMapping(value="/search" , method=POST)
+	@RequestMapping(value="/search" , method=GET)
 	public String searchBook(@ModelAttribute BookVO bookVO, Model model) throws Exception{
 		logger.info(">> search Book enter");
 		logger.info("book list : " + bookVO.toString());
@@ -120,7 +119,6 @@ public class BookController {
 			//search title
 			vo = bookMapper.getSearchBook(bookVO.getTitle());
 		}
-		
 		model.addAttribute("bookVO", vo);
 		
 		return "books/index";
