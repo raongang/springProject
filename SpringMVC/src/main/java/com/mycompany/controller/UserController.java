@@ -5,6 +5,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.util.WebUtils;
 
 import com.mycompany.mapper.UserMapper;
 import com.mycompany.vo.User;
@@ -34,7 +38,7 @@ import com.mycompany.vo.User;
  */
 
 @Controller
-@SessionAttributes("loginId")
+@SessionAttributes("loginInfo")
 public class UserController {
 	
 	@Autowired
@@ -74,18 +78,39 @@ public class UserController {
 	 * 과거 Servlet에서는 RequestDispatcher에 데이터를 저장했듯이, 스프링에서는 Model을 이용하여 데이터를 저장.
 	 * 
 	 * 사용자가 '자동로그인'을 선택한 경우 필요한 기능을 추가한다.
+	 * 
+	 * 반환형이 return이므로 view 설정에 따라 간다. 이 경우 /views/loginPost.jsp를 찾게 됨.
 	 */
 	
-	
 	@RequestMapping(value="/user/login", method=POST)
-	public String loginPost(@ModelAttribute User user, Model model) {
+	public String loginPost(@ModelAttribute User user, HttpSession session, Model model) {
 		logger.info("/user/login  POST enter");
 		logger.info("user infomation >> " + user.toString());
 		
-		int result = userMapper.getLoginInfo(user);
-		if(result==1) { //로그인 정보가 맞다면..
+		//DB에 저장할 세션값을 만들어준다.
+		//System.out.println("세션값 출력 : " + session.getId());
+		User userVO = userMapper.getLoginInfo(user);
+		//System.out.println("userVO.toString() >> " + userVO.toString());
+
+		if(userVO !=null) { //로그인 정보가 맞다면..
+			//DB에 자동로그인을 위한 loginInfo를 저장한다.
+			// HttpSession에는 값이 없고 loginCookie에 값을 있을 경우 로그인 이력이 있기 때문에, 이 정보를 가져오기 위함임.
+			
+			String sessionkey = session.getId();
+			
 			//@@SessionAttributes 에 의해 세션에 자동저장된다.
-			model.addAttribute("loginId",user);
+			model.addAttribute("loginInfo",userVO);
+			
+			if(user.isUseCookie()) {
+				int amount = 60 * 60 * 24 * 7;
+				Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
+				int result = userMapper.keepLogin(userVO.getEmail(),sessionkey, sessionLimit);
+				
+				if(result==0) { logger.info("현재 세션의 ID값과 유효기간이 업데이트되지 않았습니다."); }
+				else {
+					logger.info("현재 세션의 ID값과 유효기간이 업데이트 되었습니다.");
+				}
+			}
 			return "redirect:/bookCon/books";
 		}else {
 			return "redirect:/login";
@@ -101,23 +126,38 @@ public class UserController {
 	 *  setComplete() - 세션종료 메소드
 	 */
 	@RequestMapping(value="/user/logout", method=GET)
-	public String logOut(HttpSession session, SessionStatus status) {
+	public String logOut(HttpServletRequest request, HttpServletResponse response, HttpSession session, SessionStatus status) {
 		logger.info("logOut GET Enter");
-
+		
 		//바로 status.setComplet()으로 해제도 되지만, 기존방식과도 섞어서 HttpSession으로 처리함.
-		User sessionName = (User) session.getAttribute("loginId");
+		User sessionName = (User) session.getAttribute("loginInfo");
 		
 		if(sessionName!=null) {
-			System.out.println("session is not null");
-			status.setComplete();
-			if(status.isComplete()==true) {
-				System.out.println("Session remove success... ");
-			}else {
-				System.out.println("Session remove Faile... ");
+			logger.info("로그아웃 session is not null");
+			status.setComplete(); 
+			
+			//쿠키도 있다면 같이 지워줘야 한다
+			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			if(loginCookie!=null) {
+				logger.info("저장된 쿠키가 삭제합니다.");
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(0);
+				response.addCookie(loginCookie);
+				//DB에서도 삭제
+				userMapper.keepLogin(sessionName.getEmail(),session.getId(), new Date());
 			}
+			
+			//로그아웃 결과값 체크
+			if(status.isComplete()==true) {
+				logger.info("로그아웃 Session remove success... ");
+				
+			}else {
+				logger.info("Session remove Faile... ");
+			}
+			
+			
 		}else {
-			System.out.println("session is null");
-			logger.info("session is null");
+			logger.info("로그아웃 session is null");
 		}
 		
 		return "redirect:/login";

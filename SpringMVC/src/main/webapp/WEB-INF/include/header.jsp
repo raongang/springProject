@@ -12,10 +12,13 @@
 <!-- jquery 1.9.1--> 
 <script src="/resources/jquery/jquery-1.9.1.min.js"></script>
 
-<!--  jquery UI  -->
+<!--  jquery UI 
 <script src="/resources/jquery/jquery-ui.js"></script>
 <link href="/resources/css/jquery-ui.css" rel="stylesheet" type="text/css" />
-
+ -->
+ 
+ 
+ 
 <!-- Bootstrap 4.3.1 -->
 <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
