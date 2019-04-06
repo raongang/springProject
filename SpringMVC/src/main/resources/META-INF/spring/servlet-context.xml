@@ -16,14 +16,12 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<context:component-scan base-package="com.mycompany.controller" />
 	
-	
 	<!-- Enables the Spring MVC @Controller programming model -->
     <annotation-driven />     
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	
 	
 	<!-- 
 	  ViewResolver란? 
@@ -38,12 +36,16 @@
 	     View : 뷰에 화면표시 처리를 의뢰
 	    
 	     UrlBasedViewResolver의 서브클래스인 InternalResourceViewResolver가 등록됨. 
-		order번호가 낮은게 우선순위가 높다 
+		 order번호가 낮은게 우선순위가 높다. 
 		
      ViewResolver의 종류
          UrlBasedViewResolver를 제일 많이 사용하는데, 어느 뷰 기반으로 오브젝트가 생성되는가는 
          UrlBasedViewResolver 의 viewClass 프로퍼티에 설정하면 되며(2번), viewClass를 고정한 
          UrlBasedViewResolver를 상속한 뷰 리졸버가 여러개 있으므로, 대응하는 뷰 리졸버가 있으면 이를 이용하면 된다.
+         
+      주의사항 
+        여러개의 ViewResolver를 설정할 경우 InternalResouceViewResolver는 항상 뷰 이름이 매핑되는 뷰 객체를 리턴하므로 마지막 순위를 갖도록
+        지정해야 한다 (null을 return하지 않는다. ) 
 	  -->
 	     
 	<!-- 1번 -->
@@ -53,12 +55,40 @@
 		<beans:property name="order" value="2" />
 	</beans:bean>
 	
-	
 	<!-- 2번 -->
 	<beans:bean id="tielsViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	    <beans:property name="order" value="1" />
 	</beans:bean>
+
+	
+	
+	<!--
+	  AJAX를 이용하여 JSON처리를 위해 아래처럼 JsonViewResovler를 설정하고 JSON View를 설정했었다.
+	  이 부분을 잠시 주석하고 jsp에서 ajax로 json으로 사용할수 있게 수정하였음.
+	
+	 JsonViewResolver 
+		BeanNameViewResolver 
+		DI컨테이너에서 Bean이름이 뷰 이름인 View오브젝트 반환
+		뷰 리졸버가 등록된 DI컨테이너로부터 View오브젝트 취득
+		설정 파일의형식 : Bean 정의 파일로서 정의
+		
+		쉽게 설명하자면, BeanNameViewResolver는 주로 custom view로 많이 사용하며, controller에서 리턴받은 뷰의 이름과
+		빈에 등록되어 있는 id의 값이 같은 것을 찾아서 실행시킨다.
+		
+		ApiController에서 jsonView를 뷰이름으로 설정하여서 아래의jsonView bean이 실행됨.
+	
+	-->
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0" />
+	</beans:bean>	
+	 
+	<!-- 자동완성 관련 JSON View 설정 -->
+	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
+		<beans:property name="contentType" value="application/json;charset=UTF-8"></beans:property>
+	</beans:bean>
+	 
+	
 	
 	<!-- Tiles 설정 파일 -->
 	<beans:bean id="tilesConfigurer"
@@ -70,8 +100,33 @@
 	    </beans:property>
 	</beans:bean>
 	
-		
+	<!-- Interceptor 기능 추가
+	<beans:beans xmlns="http://www.springframework.org/schema/mvc" 이런식으로 namespace가 정의 안되면 아래와같이 작성도 가능>
+	</beans:beans>
+	 -->
+	 
+	<!-- 인터셉터 설정 끝 : xmlns:mvc="http://www.springframework.org/schema/mvc" 이 부분 선언되어야 한다.
+	     사실상 위의 설정과 같은 의미이다. 젤 위에 beans설정에 따라 차이가 있을뿐. 
+	   여기서는 mvc로 정의를 했기 때문에 mvc:interceptor를 사용하는 것이다. 
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<beans:bean id="sampleInterceptor" class="org.zerock.interceptor.SampleInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	-->		 
 	
+	<beans:bean id="loginInterceptor" class="com.mycompany.interceptor.LoginInterceptor"></beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<!-- 
+			<mapping path="/user/login" />
+			 -->
+			<mapping path="/**" />
+			<beans:ref bean="loginInterceptor" />
+		</interceptor>
+	</interceptors>
 	
 	
 	

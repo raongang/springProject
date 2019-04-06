@@ -3,6 +3,10 @@ package com.mycompany.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.Date;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +17,24 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.mycompany.mapper.UserMapper;
 import com.mycompany.vo.User;
 
+/**
+ * Handles requests for the application home page.
+ * 
+ * @SessionAttributes("")
+ *  ㄴ Session Scope에서 관리할 ModelAttribute이름.
+ *  ㄴ SessionAttributes("loginId") 설정시 Model에 ("loginId") 이라는 이름으로
+ *    저장되는 데이터가 있다면 그 데이터를 세션(HttpSession)에도 자동으로 저장한다.
+ * 
+ */
+
 @Controller
+@SessionAttributes("loginId")
 public class UserController {
 	
 	@Autowired
@@ -39,15 +56,36 @@ public class UserController {
 	}
 	
 	
-	//로그인성공시 메인화면으로 이동
-	//기본 MVC에서는 여기서 session등록을 했을 것이다.
+	@RequestMapping(value="/" , method=GET)
+	public String main() throws Exception{
+		return "redirect:/login";
+	}
+	
+	//처음로그인시 메인화면으로 전달
+	@RequestMapping(value="/login", method=GET)
+	public String loginMain() {
+		return "user/login";
+	}
+	
+	/**
+	 * 로그인성공시 메인화면으로 이동
+	 * 기본 MVC에서는 여기서 session등록을 했을 것이다.
+	 * Model Class - 스프링 MVC에서 제공하는 데이터 전달용 객체
+	 * 과거 Servlet에서는 RequestDispatcher에 데이터를 저장했듯이, 스프링에서는 Model을 이용하여 데이터를 저장.
+	 * 
+	 * 사용자가 '자동로그인'을 선택한 경우 필요한 기능을 추가한다.
+	 */
+	
+	
 	@RequestMapping(value="/user/login", method=POST)
-	public String main(@ModelAttribute User user) {
+	public String loginPost(@ModelAttribute User user, Model model) {
 		logger.info("/user/login  POST enter");
 		logger.info("user infomation >> " + user.toString());
 		
 		int result = userMapper.getLoginInfo(user);
-		if(result==1) {
+		if(result==1) { //로그인 정보가 맞다면..
+			//@@SessionAttributes 에 의해 세션에 자동저장된다.
+			model.addAttribute("loginId",user);
 			return "redirect:/bookCon/books";
 		}else {
 			return "redirect:/login";
@@ -56,10 +94,33 @@ public class UserController {
 	}
 	
 	
-	//처음로그인시 메인화면으로 전달
-	@RequestMapping(value="/login", method=GET)
-	public String login() {
-		return "user/login";
+	/** 로그아웃의 경우 session값을 없앤다.
+	 *  주의) 어노테이션으로 정의된 세션을 사용하는 것은 일반적으로 HttpSession을 이용하지만, 세션의 상태를 관리하기 위해서는
+	 *  스프링에서 제공하는 SessionStatus를 사용해야 한다.
+	 *  
+	 *  setComplete() - 세션종료 메소드
+	 */
+	@RequestMapping(value="/user/logout", method=GET)
+	public String logOut(HttpSession session, SessionStatus status) {
+		logger.info("logOut GET Enter");
+
+		//바로 status.setComplet()으로 해제도 되지만, 기존방식과도 섞어서 HttpSession으로 처리함.
+		User sessionName = (User) session.getAttribute("loginId");
+		
+		if(sessionName!=null) {
+			System.out.println("session is not null");
+			status.setComplete();
+			if(status.isComplete()==true) {
+				System.out.println("Session remove success... ");
+			}else {
+				System.out.println("Session remove Faile... ");
+			}
+		}else {
+			System.out.println("session is null");
+			logger.info("session is null");
+		}
+		
+		return "redirect:/login";
 	}
 
 	/**
