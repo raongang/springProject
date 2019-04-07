@@ -51,7 +51,14 @@
 			self.location="/bookCon/books/detailReview/"+id;
 		});
 		
-		/* 자동완성기능.- jqueryUI이용, JsonViewResolver , JSON View이용 */
+		/* 자동완성기능.- jqueryUI이용, JsonViewResolver , JSON View이용 -------> 
+		이거 하면 interceptor의 아래 두줄이 에러가 나는데 원인을 모르겠다.......
+			<< 에러 구간 
+			HandlerMethod method = (HandlerMethod)handler;
+			Method methodObj = method.getMethod();
+			>>
+		
+		
 		$("#searchBook").autocomplete({
 			source : function(request,response){
 				$.ajax({
@@ -66,7 +73,7 @@
 					}//end success
 				});//end ajax
 			}//end source
-		}); //end autocomplete
+		}); //end autocomplete */
 		
 		
 /* 		 위의 Json View를 이용하지 않고 여기서 바로 처리 - 테스트용

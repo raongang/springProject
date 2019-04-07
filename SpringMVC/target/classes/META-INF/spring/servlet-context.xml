@@ -116,17 +116,33 @@
 	</mvc:interceptors>
 	-->		 
 	
+	
+	<!-- 인터셉터 설정법
+	    로그인 페이지와 그외 로그인이 필요한 페이지를 구분하여 구현하는 것이 좋다.
+	  첫 로그인페이지에서는 로그인정보에 해당하는 세션값과 쿠키값도 없기 때문에 그냥 로그인을 제대로 했는지 체크만 하는 용도
+	  로그인이 필요한 페이지의 경우에는 쿠키값이 존재할 수 있기 때문에 로그인정보가 있는지 세션값을 체크하고 쿠키값도 체크하는 용도
+	 -->
+	
 	<beans:bean id="loginInterceptor" class="com.mycompany.interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authInterceptor" class="com.mycompany.interceptor.AuthInterceptor"></beans:bean>
 	
 	<interceptors>
 		<interceptor>
-			<!-- 
 			<mapping path="/user/login" />
-			 -->
+			<mapping path="/login" />
+			<!-- 
 			<mapping path="/**" />
+			-->
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
+		
+         <interceptor>
+			<mapping path="/bookCon/books"/>
+			<beans:ref bean="authInterceptor" />
+         </interceptor>
 	</interceptors>
+	
+	
 	
 	
 	

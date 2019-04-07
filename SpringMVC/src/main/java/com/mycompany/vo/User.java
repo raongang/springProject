@@ -1,13 +1,31 @@
 package com.mycompany.vo;
 
+import java.util.Date;
+
 public class User {
 	
 	int id;
 	String email;
 	String password;
-	boolean userCookie; //자동 로그인 기능
+	boolean useCookie; //자동 로그인 기능
+	
+	//자동로그인을 위한 세션 관리 변수
+	String sessionkey;
+	Date sessionLimit;
 	
 	
+	public Date getSessionLimit() {
+		return sessionLimit;
+	}
+	public void setSessionLimit(Date sessionLimit) {
+		this.sessionLimit = sessionLimit;
+	}
+	public String getSessionkey() {
+		return sessionkey;
+	}
+	public void setSessionkey(String sessionkey) {
+		this.sessionkey = sessionkey;
+	}
 	public int getId() {
 		return id;
 	}
@@ -26,17 +44,16 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-    public boolean isUserCookie() {
-		return userCookie;
+
+	public boolean isUseCookie() {
+		return useCookie;
 	}
-	public void setUserCookie(boolean userCookie) {
-		this.userCookie = userCookie;
+	public void setUseCookie(boolean useCookie) {
+		this.useCookie = useCookie;
 	}
 	@Override
     public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + "]";
+        return "User [id=" + id + ", email=" + email + ", password=" + password +  ", sessionkey= " + sessionkey + ", sessionLimit= "+ sessionLimit +"]";
     }	
 	
 }

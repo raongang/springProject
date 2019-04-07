@@ -10,3 +10,8 @@ insert into users ( email, password, enabled) values
 
 
 select * from users;
+
+
+
+alter table users add column sessionkey varchar(50) not null default 'none';
+alter table users add column sessionlimit timestamp;
