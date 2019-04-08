@@ -150,16 +150,12 @@ public class UserController {
 			//로그아웃 결과값 체크
 			if(status.isComplete()==true) {
 				logger.info("로그아웃 Session remove success... ");
-				
 			}else {
 				logger.info("Session remove Faile... ");
 			}
-			
-			
 		}else {
 			logger.info("로그아웃 session is null");
 		}
-		
 		return "redirect:/login";
 	}
 
