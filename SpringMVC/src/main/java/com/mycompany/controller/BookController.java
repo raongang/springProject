@@ -3,10 +3,10 @@ package com.mycompany.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.mapper.BookMapper;
 import com.mycompany.mapper.ReviewMapper;
+import com.mycompany.util.FileHelper;
 import com.mycompany.vo.BookVO;
 import com.mycompany.vo.ReviewVO;
 
@@ -90,37 +91,14 @@ public class BookController {
 	 *  Ajax 단일,다중멀티파일업로드는 https://github.com/raongang/springcodingdan/tree/master/ex04 여기를 참고한다.
 	*/
 	@RequestMapping(value = "/register", method = POST)
-	public String create(@ModelAttribute BookVO bookVO, @RequestParam("file")MultipartFile file) throws Exception {
+	public String create(@ModelAttribute BookVO bookVO, @RequestParam("file")MultipartFile file, HttpServletRequest request) throws Exception {
 		logger.info("register enter");
 		logger.info(bookVO.toString());
 		
-		
-		
-		String path="c:\\zzz\\";
-		String originalFilename = file.getOriginalFilename();
-		logger.info("originalFilename >> " + originalFilename);
-		long filesize = file.getSize();
-		logger.info("file size >> " + filesize);
-		
-		//파일 저장
-		String savefilePath = path + System.currentTimeMillis() + originalFilename;
-		logger.info("savefilePath >> " + savefilePath);
-		try {
-
-			//원본파일 저장
-			//FileCopyUtils.copy(file.getBytes(),target); //spring fileupload. MultipartFile이용시는 file.transferTo()이용
-			file.transferTo(new File(savefilePath));
-			
-		}catch(IllegalStateException e) {
-			e.printStackTrace();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		
-
+		String savefilePath = FileHelper.upload("/uploads", file,request);
 		bookVO.setImage(savefilePath); //추후 기능 구현
 		
-		Thread.sleep(15000); //로딩바 테스트를 위한 강제 슬립.
+		//Thread.sleep(15000); //로딩바 테스트를 위한 강제 슬립.
 		bookMapper.register(bookVO); 
 		return "redirect:/bookCon/books";
 		
