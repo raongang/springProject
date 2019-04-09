@@ -75,7 +75,7 @@ div.loader img {
          --%>
          
          
-         <form role="form" action="/bookCon/register" method="post">
+         <form role="form" action="/bookCon/register" method="post" enctype="multipart/form-data">
             <div class="form-group form-group-lg">
                 <label class="control-label">도서 제목</label>
                 <input name="title" type="text" class="form-control">
@@ -84,10 +84,23 @@ div.loader img {
                 <label class="control-label">저자</label>
                 <input name="author" type="text" class="form-control">
             </div>
+            
+            <!-- multipar/form-data file uplaod -->
+             <div class="form-group form-group-lg">
+             		<!--  단일파일일 경우 이거 사용--> 
+            		<input type="file" class="input-ghost" id="file" name="file"/>
+            		
+            		<!-- multi file upload  
+            		<input multiple="multiple" type="file" class="input-ghost" name="file" id="file" />
+            		--> 
+            </div>
+            
+            <%-- 
             <div class="form-group form-group-lg">
                 <label class="control-label">이미지</label>
                 <input name="image" type="text" class="form-control">
             </div>
+            --%>
             
             <button type="submit" class="btn btn-lg btn-primary">전송</button>
         </form>
