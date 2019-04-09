@@ -145,7 +145,9 @@
 	    <c:forEach var="book" items="${bookVO}" varStatus="status">
 	        <div class="col-md-4">
 	            <div class="img-thumbnail">
-	                <!-- img 손 모양 -->
+	                <!-- img 손 모양
+	                     img src 여기에 경로지정하는거 다시 해야 한다.
+	                 -->
 	                <img src="${ book.image }" alt="bookImage" style="cursor:pointer;width:100%;" class="image_title" data-book_id="${book.id}"/>
 	                <div class="caption">
 	                    <h3>${ book.title } <small>${ book.author }</small></h3>

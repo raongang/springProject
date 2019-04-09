@@ -3,10 +3,10 @@ package com.mycompany.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -94,11 +94,33 @@ public class BookController {
 		logger.info("register enter");
 		logger.info(bookVO.toString());
 		
-		//만일 여기가 멀티라면 File을 따로 관리하는 테이블을 만드는 것이 나을거 같다. - 현재는 단일만..
-		//String fileurl = FileHelper.upload("c:\\zzz\\", file); 추후 기능구현
-		//bookVO.setImage(fileurl); 추후 기능 구현
 		
-		//Thread.sleep(15000); //로딩바 테스트를 위한 강제 슬립.
+		
+		String path="c:\\zzz\\";
+		String originalFilename = file.getOriginalFilename();
+		logger.info("originalFilename >> " + originalFilename);
+		long filesize = file.getSize();
+		logger.info("file size >> " + filesize);
+		
+		//파일 저장
+		String savefilePath = path + System.currentTimeMillis() + originalFilename;
+		logger.info("savefilePath >> " + savefilePath);
+		try {
+
+			//원본파일 저장
+			//FileCopyUtils.copy(file.getBytes(),target); //spring fileupload. MultipartFile이용시는 file.transferTo()이용
+			file.transferTo(new File(savefilePath));
+			
+		}catch(IllegalStateException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+
+		bookVO.setImage(savefilePath); //추후 기능 구현
+		
+		Thread.sleep(15000); //로딩바 테스트를 위한 강제 슬립.
 		bookMapper.register(bookVO); 
 		return "redirect:/bookCon/books";
 		

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 //file upload
-/** 추후 기능 구현
+/**  디테일 한 기능 구현 위해 작성하다가 멈춤. 추후 필요시 수정 및 작성하여 사용하기
 public class FileHelper {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileHelper.class);
