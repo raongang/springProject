@@ -73,6 +73,7 @@ public class BookController {
 	 */	
 	@RequestMapping(value = "/books", method = GET) 
 	public String index(Model model) throws Exception {
+		
 		logger.info("getList book");
 		List<BookVO> list = bookMapper.getList();
 		model.addAttribute("bookVO", list);
@@ -204,7 +205,7 @@ public class BookController {
 	
 	//get 리뷰 리스트
 	@RequestMapping(value="/books/detailReview/{id}",method=GET)
-	public String showReviewList(@PathVariable("id") Integer id, Model model) throws Exception{
+	public String showReviewList(@PathVariable("id") Integer id, Model model, HttpServletRequest request) throws Exception{
 		logger.info("showReviewList Controller enter");
 		
 		//평점옵션을 표현한다
