@@ -5,6 +5,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -21,11 +23,14 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.mapper.BookMapper;
 import com.mycompany.mapper.ReviewMapper;
+import com.mycompany.util.FileHelper;
 import com.mycompany.vo.BookVO;
 import com.mycompany.vo.ReviewVO;
 
@@ -80,13 +85,20 @@ public class BookController {
 	/*
 	 *  BOOK 등록하기
 	 * @ModelAttribute라는 어노테이션만 붙여도 클라이언트에서 전달하는 파라미터를 1:1로 전담 프로퍼티에 자동 바인딩함.
-	 * 즉, 서블릿에서 String parameter1 = request.getParameter("parameter1"); 이런식의 코드가 없어지는거임. 
+	 * 즉, 서블릿에서 String parameter1 = request.getParameter("parameter1"); 이런식의 코드가 없어지는거임.
+	 * 
+	 *  여기서는 파일저장시 별도의 ajax를 이용한게 아님.
+	 *  Ajax 단일,다중멀티파일업로드는 https://github.com/raongang/springcodingdan/tree/master/ex04 여기를 참고한다.
 	*/
 	@RequestMapping(value = "/register", method = POST)
-	public String create(@ModelAttribute BookVO bookVO) throws Exception {
+	public String create(@ModelAttribute BookVO bookVO, @RequestParam("file")MultipartFile file, HttpServletRequest request) throws Exception {
 		logger.info("register enter");
 		logger.info(bookVO.toString());
-		Thread.sleep(15000); //로딩바 테스트를 위한 강제 슬립.
+		
+		String savefilePath = FileHelper.upload("/uploads", file,request);
+		bookVO.setImage(savefilePath); //추후 기능 구현
+		
+		//Thread.sleep(15000); //로딩바 테스트를 위한 강제 슬립.
 		bookMapper.register(bookVO); 
 		return "redirect:/bookCon/books";
 		

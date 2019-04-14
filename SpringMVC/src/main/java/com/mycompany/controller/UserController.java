@@ -52,7 +52,7 @@ public class UserController {
 	   이를 방지하기 위해서 사용함
 	   StringTrimmerEditor 오브젝트는 String 오브젝트의 trim메소드의 결과로 변환해주는 PropertyEditor이지만,
 	   생성자에 true를 넣으면 공백을 null로 변환해주므로 매우 유용
- */
+	 */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		logger.info("Init Binder enter!!");
@@ -150,16 +150,12 @@ public class UserController {
 			//로그아웃 결과값 체크
 			if(status.isComplete()==true) {
 				logger.info("로그아웃 Session remove success... ");
-				
 			}else {
 				logger.info("Session remove Faile... ");
 			}
-			
-			
 		}else {
 			logger.info("로그아웃 session is null");
 		}
-		
 		return "redirect:/login";
 	}
 
