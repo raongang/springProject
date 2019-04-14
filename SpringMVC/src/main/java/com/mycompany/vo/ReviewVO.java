@@ -1,7 +1,7 @@
 package com.mycompany.vo;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -33,6 +33,16 @@ public class ReviewVO {
 	Integer bookId;
 	Integer userId;
 	
+	@NotNull
+	Integer rating; //평점을 위한 필드추가
+	
+	
+	public Integer getRating() {
+		return rating;
+	}
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -60,6 +70,6 @@ public class ReviewVO {
 	
 	@Override
 	public String toString() {
-		return "Review [id=" + id + ", text=" + text + ", bookId=" + bookId + ", userId=" + userId + "]";
+		return "Review [id=" + id + ", text=" + text + ", rating =" + rating + ", bookId=" + bookId + ", userId=" + userId + "]";
 	}
 }

@@ -44,14 +44,19 @@
 <form:form modelAttribute="review" action="/ReviewCon/review" method="post">
 	<c:forEach var="error" items="${fieldErrors }">
 		<div class="alert alert-warning">
-			<strong>${error.getField() }</strong>
-			  :  ${error.getDefaultMessage()}
+			<strong>${error.getField() }</strong> :  ${error.getDefaultMessage()}
 		</div>
 	</c:forEach>
 	
 	<form:textarea path="text" cssClass="form-control" rows="5"/>
 	
-	<form:hidden   path="bookId" />
+	<!-- 리뷰 평점 선택창 -->
+	<form:label path="rating">리뷰 평점:</form:label>
+	<form:select path="rating">
+		<form:options items="${ratingOptions }" />
+	</form:select>
+	
+	<form:hidden  path="bookId" />
     <form:hidden   path="userId" /> <!-- sequence값 -->
     <button class="btn btn-block btn-primary" type="submit">Review 등록</button>	
 </form:form>
@@ -59,6 +64,7 @@
 <table class="table table-stripped">
 	<thead>
 		<tr>
+			<th>Rating</th>
 			<th>User</th>
 			<th>Text</th>		
 		</tr>
@@ -67,6 +73,8 @@
 	<tbody>
 		<c:forEach var="review" items="${reviewList}">
 			<tr>
+				<!-- for문으로 rating된 횟수만큼 돌면서 별표를 표시 -->
+				<td><c:forEach var="rating" items="${ ratingOptions }" varStatus="status" begin="1" end="${ review.rating }">★</c:forEach></td>
 				<td>익명</td>
 				<td>${review.text}</td>
 			</tr>
