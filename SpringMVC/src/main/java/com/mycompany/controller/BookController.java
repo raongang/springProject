@@ -3,9 +3,10 @@ package com.mycompany.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -50,6 +51,7 @@ public class BookController {
 	@Autowired
 	private ReviewMapper reviewMapper;
 	
+	
 	/**	
 	   WebDataBinder - 스프링을 베이스로 한 웹 애플리케이션에서 데이터 바인딩을 구현한 오브젝트
 	   StringTrimmerEditor Class - 웹어플에서 입력란에 아무것도 입력하지 않고 요청할 경우 getParameter를 하면 null이 아닌 공백이 들어온다. 
@@ -71,6 +73,7 @@ public class BookController {
 	 */	
 	@RequestMapping(value = "/books", method = GET) 
 	public String index(Model model) throws Exception {
+		
 		logger.info("getList book");
 		List<BookVO> list = bookMapper.getList();
 		model.addAttribute("bookVO", list);
@@ -202,8 +205,20 @@ public class BookController {
 	
 	//get 리뷰 리스트
 	@RequestMapping(value="/books/detailReview/{id}",method=GET)
-	public String showReviewList(@PathVariable("id") Integer id, Model model) throws Exception{
+	public String showReviewList(@PathVariable("id") Integer id, Model model, HttpServletRequest request) throws Exception{
 		logger.info("showReviewList Controller enter");
+		
+		//평점옵션을 표현한다
+		//HashMap - 키값 중복불가
+		Map<Integer,String> ratingMap = new HashMap<Integer,String>();
+		ratingMap.put(0, "☆☆☆☆☆");
+		ratingMap.put(1, "★☆☆☆☆");
+		ratingMap.put(2, "★★☆☆☆");
+		ratingMap.put(3, "★★★☆☆");
+		ratingMap.put(4, "★★★★☆");
+		ratingMap.put(5, "★★★★★");
+		
+		model.addAttribute("ratingOptions",ratingMap);
 		
 		//게시글 가져오기
 		BookVO vo = bookMapper.getBookInfo(id);

@@ -33,9 +33,9 @@ public class ReviewController {
 	/**	
 	   WebDataBinder - 스프링을 베이스로 한 웹 애플리케이션에서 데이터 바인딩을 구현한 오브젝트
 	   StringTrimmerEditor Class - 웹어플에서 입력란에 아무것도 입력하지 않고 요청할 경우 getParameter를 하면 null이 아닌 공백이 들어온다. 
-	   이를 방지하기 위해서 사용함
+	      이를 방지하기 위해서 사용함
 	   StringTrimmerEditor 오브젝트는 String 오브젝트의 trim메소드의 결과로 변환해주는 PropertyEditor이지만,
-	   생성자에 true를 넣으면 공백을 null로 변환해주므로 매우 유용
+	      생성자에 true를 넣으면 공백을 null로 변환해주므로 매우 유용
    */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -56,6 +56,9 @@ public class ReviewController {
 	public String RegiReview(@Valid @ModelAttribute ReviewVO reviewVO, BindingResult bind, RedirectAttributes attr) {
 		
 		logger.info("RegiReview enter");
+		
+		logger.info("reviewVO : " + reviewVO.toString());
+		
 		
 		if(bind.hasErrors()) {
 			logger.info("bind hass Errors");

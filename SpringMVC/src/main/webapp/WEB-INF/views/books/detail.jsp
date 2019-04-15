@@ -5,19 +5,61 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+
+<!--
 <div class="jumbotron">
 	<h1>${bookVO.title}</h1>
 	<p>${bookVO.author}저</p>
 </div>
+-->
 
-<!--
+<!-- 
     img-thumbnail : 테두리가 표시된 thumbnail
     text-center : 가운데 정렬
- -->
+
 <div class="img-thumbnail text-center">
 	<img src="${bookVO.image}">
 </div>
+ -->
+ 
+ <div class="jumbotron">
+ 	<h1 class="display-4">Show Book</h1>
+ 	<p class="lead">views/books/detailReview.jsp</p>
+ 	<hr>
+ 	<p>책 상세 페이지</p>
+ </div>
+ 
+ <!--  div class row is bootstrap gird system 
+ 	      한 행을 12개의 컬럼 기준으로 크기를 지정한다.
+ -->
+<div class="row">
+	<div class="col-md-4">
+		<img class="card-img-top" src="${bookVO.image }" alt="Card image cap">
+	</div>
+	
+	<div class="col-md-8">
+		<h3>${bookVO.title}</h3>
+		<p>저자 :  ${bookVO.author}</p>
+		<%--
+		<p>가격 : ${bookVO.price }원</p>
+		 --%>
+		 <%--여기서는 테스트로  등록하고 보는 거기때문에 하드코딩으로 가격을 정한다.
+		          아니면 등록시 가격도 작성할 수 있게 해주면 된다.--%>
+		 <p>가격 : 24000원</p>
+		<h4 class="my-4"></h4>
+		<c:url var="bookAddCartPath" value="/orderCon/cartAdd"/>
+        <form action="${bookAddCartPath }" method="post">
+            <div class="form-group">
+                <label>수량</label>
+                <input name="amount" class="form-control" type="number" value="1" />
+            </div>
+            <input name="book_id" type="hidden" value="${ bookVO.id }">
+            <button type="submit" class="btn btn-primary">장바구니에 담기</button>
+        </form>
+	</div>
+</div> 
 
+<!-- 리뷰 작성 -->
 <div class="page-header">
 	<h2>Review</h2>	
 </div>
@@ -41,24 +83,32 @@
 		<form:form action="${review}"> ... </form>
  --%>
 
+
 <form:form modelAttribute="review" action="/ReviewCon/review" method="post">
 	<c:forEach var="error" items="${fieldErrors }">
 		<div class="alert alert-warning">
-			<strong>${error.getField() }</strong>
-			  :  ${error.getDefaultMessage()}
+			<strong>${error.getField() }</strong> :  ${error.getDefaultMessage()}
 		</div>
 	</c:forEach>
 	
 	<form:textarea path="text" cssClass="form-control" rows="5"/>
 	
-	<form:hidden   path="bookId" />
+	<!-- 리뷰 평점 선택창  -->
+	<form:label path="rating">리뷰 평점:</form:label>
+	<form:select path="rating">
+		<form:options items="${ratingOptions }" />
+	</form:select>
+	
+	<form:hidden  path="bookId" />
     <form:hidden   path="userId" /> <!-- sequence값 -->
     <button class="btn btn-block btn-primary" type="submit">Review 등록</button>	
 </form:form>
 
+<!-- 리뷰 테이블 -->
 <table class="table table-stripped">
 	<thead>
 		<tr>
+			<th>Rating</th>
 			<th>User</th>
 			<th>Text</th>		
 		</tr>
@@ -67,6 +117,8 @@
 	<tbody>
 		<c:forEach var="review" items="${reviewList}">
 			<tr>
+				<!-- for문으로 rating된 횟수만큼 돌면서 별표를 표시 -->
+				<td><c:forEach var="rating" items="${ ratingOptions }" varStatus="status" begin="1" end="${ review.rating }">★</c:forEach></td>
 				<td>익명</td>
 				<td>${review.text}</td>
 			</tr>

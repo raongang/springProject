@@ -48,6 +48,7 @@
 		//상세페이지
 		$(".image_title").on("click",function(e){
 			var id= $(this).data("book_id");
+			//새창을 열게 해준다.
 			self.location="/bookCon/books/detailReview/"+id;
 		});
 		

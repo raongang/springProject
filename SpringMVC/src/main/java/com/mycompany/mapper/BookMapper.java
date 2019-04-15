@@ -59,4 +59,6 @@ public interface BookMapper {
 	@Select("select * from books where title like '%${title}%'")
 	public List<BookVO> search(@Param("title") String title);
 
+	
+
 }

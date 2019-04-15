@@ -9,7 +9,7 @@ import com.mycompany.vo.ReviewVO;
 
 public interface ReviewMapper {
 	
-	@Insert("insert into reviews(text,book_id) values (#{text},#{bookId})")
+	@Insert("insert into reviews(text,rating, book_id) values (#{text},#{rating},#{bookId})")
 	void register(ReviewVO reviewVO);
 
 	@Select("select * from reviews where book_id = #{bookId} order by id desc")
